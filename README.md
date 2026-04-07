@@ -1,0 +1,1 @@
+El objetivo de este proyecto es resolver el problema de organización y poder tener un registro claro de ventas y pagos de manera online. Ya que a veces el registro físico(papel) se extravía o es poco claro. Además del control de stock. Todo esto se podrá exportar en documentos y guardado en base de datos SQLite, usando E.F core.
