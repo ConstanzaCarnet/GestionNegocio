@@ -18,5 +18,9 @@ public class Producto
 
     public int IdCategoria { get; set; }
     public Categoria Categoria { get; set; }
+
+    //usaremos un diseño de software DDD(Domain-Driven Design) para organizar el código, por lo que no tendremos una clase de repositorio, sino que el acceso a los datos se realizará a través de servicios o casos de uso específicos.
+
+
 }
 
