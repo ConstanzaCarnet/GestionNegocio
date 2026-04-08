@@ -8,7 +8,7 @@ namespace GestionApp.src.Models
 {
     public class Venta
     {
-        private int IdVenta;
+        public int IdVenta;
         public DateTime Fecha { get; private set; } = DateTime.Now;
         public int IdCliente { get; private set; }
         public Cliente Cliente { get; private set; }//relacion con cliente, una venta pertenece a un cliente
@@ -24,12 +24,6 @@ namespace GestionApp.src.Models
         //Constructor necesario para EF(Entity Framework)
         //sin parametros, me permite crear una instancia de la clase Venta sin necesidad de pasarle argumentos, lo cual es útil para EF cuando carga los datos desde la base de datos y necesita crear objetos sin conocer los detalles de su construcción.
         public Venta() { }
-
-        //get de idventa
-        public int GetIdVenta()
-        {
-            return IdVenta;
-        }
 
         //Constructor para crear una nueva venta.
         public Venta(Cliente cliente, string metodoPago)
@@ -50,6 +44,7 @@ namespace GestionApp.src.Models
 
         public void AgregarProducto(Producto producto, int cantidad)
         {
+
             if (producto == null)
                 throw new Exception("Producto inválido");
 
@@ -58,13 +53,16 @@ namespace GestionApp.src.Models
 
             if (producto.Stock < cantidad)
                 throw new Exception("Stock insuficiente");
+            
+            bool aumentarCantidad = true;
 
             var detalleExistente = _detalles
                 .FirstOrDefault(d => d.IdProducto == producto.IdProducto);
 
+
             if (detalleExistente != null)
             {
-                detalleExistente.AumentarCantidad(cantidad);
+                detalleExistente.CambiarCantidad(cantidad, aumentarCantidad);
             }
             else
             {

@@ -55,6 +55,11 @@ namespace GestionApp.src.Data
                 .WithMany(c => c.Ventas)
                 .HasForeignKey(v => v.IdCliente);
 
+            modelBuilder.Entity<Venta>()
+                .HasMany(typeof(DetalleVenta), "_detalles")
+                .WithOne("Venta")
+                .HasForeignKey("IdVenta");
+
             modelBuilder.Entity<DetalleVenta>()
                 .HasOne(d => d.Venta)
                 .WithMany(v => v.Detalles)

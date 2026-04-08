@@ -9,7 +9,7 @@ namespace GestionApp.src.Models
     //cree el detalle de venta a parte, pensando en un ticket, tenemos la venta entera y por dentro, el detalle de cada cosa
     public class DetalleVenta
     {
-        private int IdDetalle;
+        public int IdDetalle;
         public int IdVenta { get; set; }
         public Venta Venta { get; set; } //relacion con venta, un detalle pertenece a una venta
         public int IdProducto { get; set; }
@@ -18,6 +18,7 @@ namespace GestionApp.src.Models
         public decimal PrecioUnitario { get; set; }
         //al ser detalle de venta, tenemos el Subtotal
         public decimal Subtotal => Cantidad * PrecioUnitario;
+
 
         public DetalleVenta() { }
 

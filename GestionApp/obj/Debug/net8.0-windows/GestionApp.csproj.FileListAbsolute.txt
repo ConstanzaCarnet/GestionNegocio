@@ -134,3 +134,4 @@ E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.frmVerClientes.resources
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.frmVerProductos.resources
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.csproj.Up2Date
+E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.sourcelink.json

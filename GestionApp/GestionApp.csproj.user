@@ -1,49 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Compile Update="frmHome.cs">
+    <Compile Update="Vistas\frmHome.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmBuscarCliente.cs">
+    <Compile Update="Vistas\frmBuscarCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmBuscarProducto.cs">
+    <Compile Update="Vistas\frmBuscarProducto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmCargarPago.cs">
+    <Compile Update="Vistas\frmCargarPago.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmClientesDeudores.cs">
+    <Compile Update="Vistas\frmClientesDeudores.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmDetalleProducto.cs">
+    <Compile Update="Vistas\frmDetalleProducto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmDetalleVenta.cs">
+    <Compile Update="Vistas\frmDetalleVenta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmNuevaVenta.cs">
+    <Compile Update="Vistas\frmNuevaVenta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmNuevoCliente.cs">
+    <Compile Update="Vistas\frmNuevoCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmNuevoProducto.cs">
+    <Compile Update="Vistas\frmNuevoProducto.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmProductoPorCategoria.cs">
+    <Compile Update="Vistas\frmProductoPorCategoria.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmVentaPago.cs">
+    <Compile Update="Vistas\frmVentaPago.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmVentas.cs">
+    <Compile Update="Vistas\frmVentas.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmVerClientes.cs">
+    <Compile Update="Vistas\frmVerClientes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmVerProductos.cs">
+    <Compile Update="Vistas\frmVerProductos.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
