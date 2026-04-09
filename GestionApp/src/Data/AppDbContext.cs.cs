@@ -72,7 +72,7 @@ namespace GestionApp.src.Data
 
             modelBuilder.Entity<CuentaCorriente>()
                 .HasOne(c => c.Cliente)
-                .WithMany(cl => cl.CuentasCorrientes)
+                .WithMany(cl => cl.Movimientos)
                 .HasForeignKey(c => c.IdCliente);
 
             modelBuilder.Entity<CuentaCorriente>()

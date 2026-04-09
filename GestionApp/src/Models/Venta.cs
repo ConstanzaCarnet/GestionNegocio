@@ -26,9 +26,9 @@ namespace GestionApp.src.Models
         public Venta() { }
 
         //Constructor para crear una nueva venta.
-        public Venta(Cliente cliente, string metodoPago)
+        public Venta(int clienteId, string metodoPago)
         {
-            if(IdCliente <= 0)
+            if(clienteId <= 0)
             {
                 throw new ArgumentException("El cliente no puede ser nulo o tener un Id inválido.");
             }
@@ -37,8 +37,7 @@ namespace GestionApp.src.Models
                 throw new ArgumentException("El método de pago no puede ser nulo o vacío.");
             }
 
-            cliente = Cliente;
-            IdCliente = cliente.IdCliente;
+            Cliente = new Cliente { IdCliente = clienteId };
             MetodoPago = metodoPago;
         }
 
@@ -80,6 +79,7 @@ namespace GestionApp.src.Models
             RecalcularTotal();
         }
 
+        //recalculamos el total cada vez que se agrega un producto, para mantenerlo actualizado
         private void RecalcularTotal()
         {
             MontoTotal = _detalles.Sum(d => d.Subtotal);

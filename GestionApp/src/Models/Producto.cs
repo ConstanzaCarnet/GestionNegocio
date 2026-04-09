@@ -19,8 +19,23 @@ public class Producto
     public Categoria Categoria { get; set; }
 
     //usaremos un diseño de software DDD(Domain-Driven Design) para organizar el código, por lo que no tendremos una clase de repositorio, sino que el acceso a los datos se realizará a través de servicios o casos de uso específicos.
+    //constructores
+    public Producto()
+    {
+    }
 
+    public Producto(string nombre, string? descripcion, decimal precioCompra, decimal precioVenta, int stock, string? imagen, int idCategoria)
+    {
+        Nombre = nombre;
+        Descripcion = descripcion;
+        PrecioCompra = precioCompra;
+        PrecioVenta = precioVenta;
+        Stock = stock;
+        Imagen = imagen;
+        IdCategoria = idCategoria;
+    }
 
+    //método para descontar cantidad en stock de un producto
     public void DescontarStock(int cantidad)
     {
         if (cantidad <= 0)
@@ -30,6 +45,14 @@ public class Producto
             throw new Exception("Stock insuficiente");
 
         Stock -= cantidad;
+    }
+
+    //agregar cantidad en stock de un producto
+    public void AgregarStock(int cantidad)
+    {
+        if (cantidad <= 0)
+            throw new Exception("Cantidad inválida");
+        Stock += cantidad;
     }
 
 }
