@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GestionApp.src.Models;
+//para usar elementos de form
+using System.Windows.Forms;
+
 
 namespace GestionApp.src.Models
 {
@@ -16,27 +20,19 @@ namespace GestionApp.src.Models
         public string? Direccion { get; set; }
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
         public string Estado { get; set; } = "Activo"; //me servirá para el envío de catálogo y mensajería personalizada
-        public List<Venta> Ventas { get; set; } = new List<Venta>();
-
-        private List<CuentaCorriente> _movimientos = new();
-        public IReadOnlyCollection<CuentaCorriente> Movimientos => _movimientos;
+        //CLINTE 1 ---> 1 CUENTA
+        public CuentaCorriente Cuenta { get; set; }
 
         public Cliente() { }
 
-        public Cliente(string nombre, string email, int telefono)
+        public Cliente(string nombre, string apellido, string email, string telefono, string direccion)
         {
-            if(string.IsNullOrWhiteSpace(nombre))
-            {
-                throw new ArgumentException("El nombre del cliente no puede ser nulo o vacío.");
-            }
-            if(string.IsNullOrWhiteSpace(email))
-            {
-                throw new ArgumentException("El email del cliente no puede ser nulo o vacío.");
-            }
             //BUSCAR LIBRERÍA PARA VALIDAR TELEFONO CORRECTAMENTE!!!!!
             Nombre = nombre;
+            Apellido = apellido;
             Email = email;
-            Telefono = telefono.ToString();
+            Telefono = telefono;
+            Direccion = direccion;
         }
         
         public void CambiarDatos(string nombre, string? apellido, string? email, string telefono, string? direccion)
@@ -65,11 +61,7 @@ namespace GestionApp.src.Models
         {
             Estado = "Activo";
         }
-        public decimal CalcularSaldo()
-        {
-            return _movimientos.Sum(m =>
-                m.Tipo == "CARGO" ? m.Monto : -m.Monto);
-        }
 
+        
     }
 }

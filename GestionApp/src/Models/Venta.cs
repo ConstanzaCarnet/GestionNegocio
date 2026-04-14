@@ -1,92 +1,72 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using GestionApp.src.DTOs;
 
 namespace GestionApp.src.Models
 {
     public class Venta
     {
-        public int IdVenta;
-        public DateTime Fecha { get; private set; } = DateTime.Now;
+        public int IdVenta { get; private set; }
         public int IdCliente { get; private set; }
-        public Cliente Cliente { get; private set; }//relacion con cliente, una venta pertenece a un cliente
-        public string MetodoPago { get; private set; }
         //una venta puede tener varios detalles de venta, por lo que se tiene una relación de uno a muchos entre venta y detalle de venta
-        public List<DetalleVenta> _detalles = new List<DetalleVenta>();
-        //exponemos los detalles de venta como una colección de solo lectura, para evitar que se modifiquen desde fuera de la clase Venta, y así mantener la integridad de los datos
+        private readonly List<DetalleVenta> _detalles = new();
         public IReadOnlyCollection<DetalleVenta> Detalles => _detalles;
+        public decimal MontoTotal => _detalles.Sum(d => d.Subtotal);
+        public DateTime Fecha { get; private set; } = DateTime.Now;
 
-        public decimal MontoTotal { get; private set; }
-    
 
         //Constructor necesario para EF(Entity Framework)
         //sin parametros, me permite crear una instancia de la clase Venta sin necesidad de pasarle argumentos, lo cual es útil para EF cuando carga los datos desde la base de datos y necesita crear objetos sin conocer los detalles de su construcción.
         public Venta() { }
 
-        //Constructor para crear una nueva venta.
-        public Venta(int clienteId, string metodoPago)
+
+        // Constructor
+        public Venta(int idCliente)
         {
-            if(clienteId <= 0)
-            {
-                throw new ArgumentException("El cliente no puede ser nulo o tener un Id inválido.");
-            }
-            if(string.IsNullOrWhiteSpace(metodoPago))
-            {
-                throw new ArgumentException("El método de pago no puede ser nulo o vacío.");
-            }
-
-            Cliente = new Cliente { IdCliente = clienteId };
-            MetodoPago = metodoPago;
+            IdCliente = idCliente;
         }
-
+               
         public void AgregarProducto(Producto producto, int cantidad)
         {
-
-            if (producto == null)
-                throw new Exception("Producto inválido");
-
-            if (cantidad <= 0)
-                throw new Exception("Cantidad inválida");
-
             if (producto.Stock < cantidad)
                 throw new Exception("Stock insuficiente");
-            
-            bool aumentarCantidad = true;
-
-            var detalleExistente = _detalles
-                .FirstOrDefault(d => d.IdProducto == producto.IdProducto);
-
-
-            if (detalleExistente != null)
+            //revisar si el producto ya existe
+            var existente = _detalles.FirstOrDefault(d => d.IdProducto == producto.IdProducto);
+            if (existente != null)
             {
-                detalleExistente.CambiarCantidad(cantidad, aumentarCantidad);
+                //aumento la cantidad del detalle
+                existente.AumentarCantidad(cantidad);
+                return;
             }
             else
             {
-                var detalle = new DetalleVenta(
-                    producto.IdProducto,
-                    cantidad,
-                    producto.PrecioVenta
-                );
-
+                //cargar nuevo detalle
+                var detalle = new DetalleVenta(producto.IdProducto, cantidad, producto.PrecioVenta);
                 _detalles.Add(detalle);
             }
-
+            //actualizo stock
             producto.DescontarStock(cantidad);
-
-            RecalcularTotal();
         }
-
-        //recalculamos el total cada vez que se agrega un producto, para mantenerlo actualizado
-        private void RecalcularTotal()
+        //quitar elemento a detalle
+        public void QuitarDetalle(int idDetalle)
         {
-            MontoTotal = _detalles.Sum(d => d.Subtotal);
+            var detalle = _detalles.FirstOrDefault(d => d.IdDetalle == idDetalle);
+            if (detalle == null)
+                throw new Exception("Detalle no encontrado");
+            _detalles.Remove(detalle);
         }
 
+        //limpiar todos los elementos del detalle de venta
+        public void LimpiarDetalles()
+        {
+            _detalles.Clear();
+        }
 
 
     }
-
 }

@@ -17,6 +17,7 @@ namespace GestionApp.src.Data
         public DbSet<Venta> Ventas { get; set; }
         public DbSet<DetalleVenta> DetallesVenta { get; set; }
         public DbSet<CuentaCorriente> CuentasCorrientes { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
 
         //configuracion de la conexion a la base de datos, en este caso se usa SQLite y se especifica la ruta del archivo de la base de datos
         //con esto evitamos tener que instanciar la conexion cada vez que queramos usar la base de datos,
@@ -30,7 +31,7 @@ namespace GestionApp.src.Data
         private string GetDbPath()
         {
             var folder = AppDomain.CurrentDomain.BaseDirectory;
-            return Path.Combine(folder, "negocio.db");//se guarda en: bin/Debug/net8.0-windows/negocio.db
+            return Path.Combine(folder, "Negocio.db");//se guarda en: bin/Debug/net8.0-windows/negocio.db
         }
 
         //configuracion de las relaciones entre las tablas, manejado con Entity Framework Core
@@ -42,7 +43,8 @@ namespace GestionApp.src.Data
             modelBuilder.Entity<Cliente>().HasKey(c => c.IdCliente);
             modelBuilder.Entity<Venta>().HasKey(v => v.IdVenta);
             modelBuilder.Entity<DetalleVenta>().HasKey(d => d.IdDetalle);
-            modelBuilder.Entity<CuentaCorriente>().HasKey(c => c.IdMovimiento);
+            modelBuilder.Entity<CuentaCorriente>().HasKey(c => c.IdCuenta);
+            modelBuilder.Entity<Pago>().HasKey(p=> p.IdPago);
 
             //relaciones
             modelBuilder.Entity<Producto>()
@@ -51,35 +53,24 @@ namespace GestionApp.src.Data
                 .HasForeignKey(p => p.IdCategoria);
 
             modelBuilder.Entity<Venta>()
-                .HasOne(v => v.Cliente)
-                .WithMany(c => c.Ventas)
-                .HasForeignKey(v => v.IdCliente);
-
-            modelBuilder.Entity<Venta>()
-                .HasMany(typeof(DetalleVenta), "_detalles")
-                .WithOne("Venta")
-                .HasForeignKey("IdVenta");
-
-            modelBuilder.Entity<DetalleVenta>()
-                .HasOne(d => d.Venta)
-                .WithMany(v => v.Detalles)
+                .HasMany(v => v.Detalles)
+                .WithOne(d => d.Venta)
                 .HasForeignKey(d => d.IdVenta);
 
-            modelBuilder.Entity<DetalleVenta>()
-                .HasOne(d => d.Producto)
-                .WithMany()
-                .HasForeignKey(d => d.IdProducto);
+            modelBuilder.Entity<Venta>()
+                .Navigation(v => v.Detalles)
+                .UsePropertyAccessMode(PropertyAccessMode.Field);
 
+            modelBuilder.Entity<DetalleVenta>()
+                .Property(d => d.PrecioUnitario)
+                .HasColumnType("decimal(18,2)");
+
+            //cuenta, relacion cliente 1-1
             modelBuilder.Entity<CuentaCorriente>()
                 .HasOne(c => c.Cliente)
-                .WithMany(cl => cl.Movimientos)
-                .HasForeignKey(c => c.IdCliente);
+                .WithOne(cl => cl.Cuenta)
+                .HasForeignKey<CuentaCorriente>(c => c.IdCliente);
 
-            modelBuilder.Entity<CuentaCorriente>()
-                .HasOne(c => c.Venta)
-                .WithMany()
-                .HasForeignKey(c => c.IdVenta)
-                .IsRequired(false); //un movimiento de cuenta corriente puede no estar relacionado con una venta, por eso se marca como opcional
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GestionApp.src.Data;
+using GestionApp.src.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +10,28 @@ namespace GestionApp.src.Services
 {
     public class CuentaCorrienteServices
     {
-        //registro de pago
-        public void RegistroPago(int clienteId, decimal monto, int? idVenta = null)
+        // conexion a base de datos            
+        //AppDbContext _context = new AppDbContext();---> en lugar de esto, usamos inyeccion de dependemcias
+        private readonly AppDbContext _context;
+        public CuentaCorrienteServices(AppDbContext context)
         {
-            //inicializar el contexto(conexion) de la base de datos
-            using var db = new Data.AppDbContext();
-            //crear un nuevo movimiento de cuenta corriente para el pago, llamo el método del modelo CuentaCorriente para registrar el movimiento
-            var movimiento = new Models.CuentaCorriente(clienteId, monto, "PAGO", idVenta);
-            //agregar el movimiento a la base de datos
-            db.CuentasCorrientes.Add(movimiento);
-            //guardar los cambios en la base de datos
-            db.SaveChanges();
+            _context = context;
+        }
+
+        //metodos del Service
+        public CuentaCorriente ObtenerPorCliente(int clienteId)
+        {
+            //uso los métodos de EF para buscar el clietne y retornarlo
+            return _context.CuentasCorrientes
+                .First(c => c.IdCliente == clienteId);
+        }
+
+        public decimal ObtenerSaldo(int clienteId)
+        {
+            return _context.CuentasCorrientes
+                .Where(c => c.IdCliente == clienteId)
+                .Select(c => c.Saldo)
+                .First();
         }
     }
 }

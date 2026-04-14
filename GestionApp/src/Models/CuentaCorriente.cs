@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,39 +9,52 @@ namespace GestionApp.src.Models
 {
     public class CuentaCorriente
     {
-        public int IdMovimiento { get; set; }
-
+        public int IdCuenta { get; set; }
         public int IdCliente { get; set; }
         public Cliente Cliente { get; set; } //relacion con cliente, un movimiento de cuenta corriente pertenece a un cliente
-        public DateTime Fecha { get; set; } = DateTime.Now; 
-        public decimal Monto { get; set; }
-        public int? IdVenta { get; set; } //relacion con venta, un movimiento de cuenta corriente puede estar relacionado con una venta, pero no es obligatorio, puede ser un pago sin venta, o un ajuste manual
-        public Venta? Venta { get; set; }
-        public string Tipo { get; set; } //puede ser "Cargo" o "Pago"
+        public decimal Saldo { get; set; } //saldo actual de la cuenta corriente, se actualiza con cada movimiento registrado
+        //public ICollection<Venta> Ventas { get; set; } = new List<Venta>();
+        public ICollection<Pago> Pagos { get; set; } = new List<Pago>();
 
         public CuentaCorriente() { }
 
-        public CuentaCorriente(int idCliente, decimal monto, string tipo, int? idVenta = null)//si no ingresa idVenta, se asume que es un movimiento sin venta asociada, como un pago o un ajuste manual
+        public CuentaCorriente(int idCliente)
         {
             IdCliente = idCliente;
-            Monto = monto;
-            Tipo = tipo.ToUpper();
-            IdVenta = idVenta;
         }
 
-        //registrar movimiento nuevo
-        public void RegistrarMovimiento(decimal monto, string tipo, int? idVenta = null)
+        // metodo para registrar pago
+        public void RegistrarPago(Pago pago)
         {
-            if (monto <= 0)
-                throw new ArgumentException("El monto debe ser mayor a cero.");
-            if (string.IsNullOrWhiteSpace(tipo) || (tipo != "CARGO" && tipo != "PAGO"))//||ADELANTO??
-                throw new ArgumentException("El tipo debe ser 'CARGO' o 'PAGO'.");
-            Monto = monto;
-            Tipo = tipo.ToUpper();
-            IdVenta = idVenta;
-            Fecha = DateTime.Now; //actualiza la fecha al registrar un nuevo movimiento
+            if (pago == null)
+                throw new Exception("Pago inválido");
+
+            if (pago.Monto > Saldo)
+                throw new Exception("El pago excede la deuda actual");
+
+            Saldo -= pago.Monto;
+            Pagos.Add(pago);
         }
+        //cambios en el saldo
+        //aplico cargo
+        public void AplicarCargo(decimal cargo)
+        {
+            if(cargo <= 0)
+                throw new Exception();
+            
+            Saldo+= cargo;
+        }
+        
+        //aplicar pago
+        public void AplicarPago(decimal pago)
+        {
+            if (pago <= 0)
+                throw new Exception();
 
+            if (pago > Saldo)
+                throw new Exception();
 
+            Saldo -= pago;
+        }
     }
 }

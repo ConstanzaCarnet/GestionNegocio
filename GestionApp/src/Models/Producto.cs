@@ -54,6 +54,17 @@ public class Producto
             throw new Exception("Cantidad inválida");
         Stock += cantidad;
     }
-
+    //modificar producto
+    public void CambiarDatos(string nombre, decimal precioVenta,int stock, int idCategoría)
+    {
+        if (nombre == null) throw new Exception("Nombre inválido");
+        if (precioVenta <= 0) throw new Exception("Precio de venta inválido");
+        //la categoría la ingresaremos de un combobox, por ende no la valido
+        //cambio los valores
+        Nombre = nombre;
+        PrecioVenta = precioVenta;
+        Stock = stock;
+        IdCategoria = idCategoría;
+    }
 }
 

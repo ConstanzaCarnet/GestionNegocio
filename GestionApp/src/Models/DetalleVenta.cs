@@ -9,48 +9,41 @@ namespace GestionApp.src.Models
     //cree el detalle de venta a parte, pensando en un ticket, tenemos la venta entera y por dentro, el detalle de cada cosa
     public class DetalleVenta
     {
-        public int IdDetalle;
-        public int IdVenta { get; set; }
-        public Venta Venta { get; set; } //relacion con venta, un detalle pertenece a una venta
-        public int IdProducto { get; set; }
-        public Producto Producto { get; set; } //con esto podemos acceder a los datos del producto desde el detalle de venta, como el nombre o el precio
-        public int Cantidad { get; set; }
-        public decimal PrecioUnitario { get; set; }
-        //al ser detalle de venta, tenemos el Subtotal
+        public int IdDetalle { get; private set; }
+        public int IdVenta { get; private set; }
+        public Venta Venta { get; private set; }
+        public int IdProducto { get; private set; }
+        public Producto Producto { get; private set; }
+        public int Cantidad { get; private set; }
+        public decimal PrecioUnitario { get; private set; }
         public decimal Subtotal => Cantidad * PrecioUnitario;
 
 
-        public DetalleVenta() { }
+        private DetalleVenta() { }
 
         //método
         public DetalleVenta(int idProducto, int cantidad, decimal precioUnitario)
         {
-            if (cantidad <= 0)
-                throw new Exception("Cantidad inválida");
-
             IdProducto = idProducto;
             Cantidad = cantidad;
             PrecioUnitario = precioUnitario;
         }
-
-        public void CambiarCantidad(int cantidad, bool aumentar)
+        //método para aumentar cantidad
+        public void AumentarCantidad(int cantidad)
         {
             if (cantidad <= 0)
                 throw new Exception("Cantidad inválida");
 
-            if (aumentar)
-            {
-                Cantidad += cantidad;
-            }
-            else
-            {
-                Cantidad -= cantidad;
-                if (Cantidad < 0) Cantidad = 0;
-            }
-            if (Cantidad == 0)
-            {
-             //elimino
-            }
+            Cantidad += cantidad;
+        }
+        //disminuir cantidad
+        public void DisminuirCantidad(int cantidad)
+        {
+            if (cantidad <= 0)
+                throw new Exception("Cantidad inválida");
+            if (Cantidad < cantidad)
+                throw new Exception("Cantidad a disminuir mayor a la cantidad actual");
+            Cantidad -= cantidad;
         }
 
     }
