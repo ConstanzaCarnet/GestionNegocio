@@ -13,9 +13,6 @@
     <Compile Update="Vistas\frmCargarPago.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Vistas\frmClientesDeudores.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Vistas\frmDetalleProducto.cs">
       <SubType>Form</SubType>
     </Compile>

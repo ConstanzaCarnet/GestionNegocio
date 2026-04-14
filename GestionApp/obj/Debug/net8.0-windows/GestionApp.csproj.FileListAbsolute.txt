@@ -122,7 +122,6 @@ E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.frmBuscarCliente.resources
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.frmBuscarProducto.resources
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.frmCargarPago.resources
-E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.frmClientesDeudores.resources
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.frmDetalleProducto.resources
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.frmDetalleVenta.resources
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.frmNuevaVenta.resources

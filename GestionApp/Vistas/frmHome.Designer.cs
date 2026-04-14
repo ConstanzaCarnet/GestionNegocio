@@ -47,7 +47,6 @@
             comprasDeUnClienteToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem4 = new ToolStripSeparator();
             filtrarClienteToolStripMenuItem = new ToolStripMenuItem();
-            clientesConDeudaToolStripMenuItem = new ToolStripMenuItem();
             cargarPagoToolStripMenuItem = new ToolStripMenuItem();
             ventasToolStripMenuItem = new ToolStripMenuItem();
             cargarNuevaVentaToolStripMenuItem = new ToolStripMenuItem();
@@ -146,7 +145,7 @@
             // 
             // clientesToolStripMenuItem
             // 
-            clientesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { nuevoClienteToolStripMenuItem, toolStripMenuItem3, comprasDeUnClienteToolStripMenuItem, toolStripMenuItem4, filtrarClienteToolStripMenuItem, clientesConDeudaToolStripMenuItem, cargarPagoToolStripMenuItem });
+            clientesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { nuevoClienteToolStripMenuItem, toolStripMenuItem3, comprasDeUnClienteToolStripMenuItem, toolStripMenuItem4, filtrarClienteToolStripMenuItem, cargarPagoToolStripMenuItem });
             clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
             clientesToolStripMenuItem.Size = new Size(61, 20);
             clientesToolStripMenuItem.Text = "Clientes";
@@ -154,45 +153,38 @@
             // nuevoClienteToolStripMenuItem
             // 
             nuevoClienteToolStripMenuItem.Name = "nuevoClienteToolStripMenuItem";
-            nuevoClienteToolStripMenuItem.Size = new Size(177, 22);
+            nuevoClienteToolStripMenuItem.Size = new Size(180, 22);
             nuevoClienteToolStripMenuItem.Text = "Nuevo cliente...";
             nuevoClienteToolStripMenuItem.Click += nuevoClienteToolStripMenuItem_Click;
             // 
             // toolStripMenuItem3
             // 
             toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(174, 6);
+            toolStripMenuItem3.Size = new Size(177, 6);
             // 
             // comprasDeUnClienteToolStripMenuItem
             // 
             comprasDeUnClienteToolStripMenuItem.Name = "comprasDeUnClienteToolStripMenuItem";
-            comprasDeUnClienteToolStripMenuItem.Size = new Size(177, 22);
+            comprasDeUnClienteToolStripMenuItem.Size = new Size(180, 22);
             comprasDeUnClienteToolStripMenuItem.Text = "Ver todos";
             comprasDeUnClienteToolStripMenuItem.Click += comprasDeUnClienteToolStripMenuItem_Click;
             // 
             // toolStripMenuItem4
             // 
             toolStripMenuItem4.Name = "toolStripMenuItem4";
-            toolStripMenuItem4.Size = new Size(174, 6);
+            toolStripMenuItem4.Size = new Size(177, 6);
             // 
             // filtrarClienteToolStripMenuItem
             // 
             filtrarClienteToolStripMenuItem.Name = "filtrarClienteToolStripMenuItem";
-            filtrarClienteToolStripMenuItem.Size = new Size(177, 22);
+            filtrarClienteToolStripMenuItem.Size = new Size(180, 22);
             filtrarClienteToolStripMenuItem.Text = "Buscar cliente...";
             filtrarClienteToolStripMenuItem.Click += filtrarClienteToolStripMenuItem_Click;
-            // 
-            // clientesConDeudaToolStripMenuItem
-            // 
-            clientesConDeudaToolStripMenuItem.Name = "clientesConDeudaToolStripMenuItem";
-            clientesConDeudaToolStripMenuItem.Size = new Size(177, 22);
-            clientesConDeudaToolStripMenuItem.Text = "Clientes deudores...";
-            clientesConDeudaToolStripMenuItem.Click += clientesConDeudaToolStripMenuItem_Click;
             // 
             // cargarPagoToolStripMenuItem
             // 
             cargarPagoToolStripMenuItem.Name = "cargarPagoToolStripMenuItem";
-            cargarPagoToolStripMenuItem.Size = new Size(177, 22);
+            cargarPagoToolStripMenuItem.Size = new Size(180, 22);
             cargarPagoToolStripMenuItem.Text = "Cargar pago...";
             cargarPagoToolStripMenuItem.Click += cargarPagoToolStripMenuItem_Click;
             // 
@@ -206,31 +198,31 @@
             // cargarNuevaVentaToolStripMenuItem
             // 
             cargarNuevaVentaToolStripMenuItem.Name = "cargarNuevaVentaToolStripMenuItem";
-            cargarNuevaVentaToolStripMenuItem.Size = new Size(180, 22);
+            cargarNuevaVentaToolStripMenuItem.Size = new Size(149, 22);
             cargarNuevaVentaToolStripMenuItem.Text = "Nueva venta...";
             cargarNuevaVentaToolStripMenuItem.Click += cargarNuevaVentaToolStripMenuItem_Click;
             // 
             // toolStripMenuItem2
             // 
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(177, 6);
+            toolStripMenuItem2.Size = new Size(146, 6);
             // 
             // verTodasToolStripMenuItem
             // 
             verTodasToolStripMenuItem.Name = "verTodasToolStripMenuItem";
-            verTodasToolStripMenuItem.Size = new Size(180, 22);
+            verTodasToolStripMenuItem.Size = new Size(149, 22);
             verTodasToolStripMenuItem.Text = "Ver todas...";
             verTodasToolStripMenuItem.Click += verTodasToolStripMenuItem_Click;
             // 
             // toolStripMenuItem8
             // 
             toolStripMenuItem8.Name = "toolStripMenuItem8";
-            toolStripMenuItem8.Size = new Size(177, 6);
+            toolStripMenuItem8.Size = new Size(146, 6);
             // 
             // balancesToolStripMenuItem
             // 
             balancesToolStripMenuItem.Name = "balancesToolStripMenuItem";
-            balancesToolStripMenuItem.Size = new Size(180, 22);
+            balancesToolStripMenuItem.Size = new Size(149, 22);
             balancesToolStripMenuItem.Text = "Balances...";
             // 
             // frmHome
@@ -268,7 +260,6 @@
         private ToolStripMenuItem comprasDeUnClienteToolStripMenuItem;
         private ToolStripSeparator toolStripMenuItem4;
         private ToolStripMenuItem filtrarClienteToolStripMenuItem;
-        private ToolStripMenuItem clientesConDeudaToolStripMenuItem;
         private ToolStripMenuItem nuevoProductoToolStripMenuItem;
         private ToolStripSeparator toolStripMenuItem5;
         private ToolStripMenuItem verTodosToolStripMenuItem;

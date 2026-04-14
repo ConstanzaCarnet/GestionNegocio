@@ -29,7 +29,10 @@
         private void InitializeComponent()
         {
             grpDatos = new GroupBox();
-            txtPCompra = new TextBox();
+            cmdAgregar = new Button();
+            txtDireccion = new TextBox();
+            txtTelefono = new TextBox();
+            txtEmail = new TextBox();
             txtNombre = new TextBox();
             txtApellido = new TextBox();
             label6 = new Label();
@@ -37,18 +40,15 @@
             label4 = new Label();
             label3 = new Label();
             label1 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            cmdAgregar = new Button();
             grpDatos.SuspendLayout();
             SuspendLayout();
             // 
             // grpDatos
             // 
             grpDatos.Controls.Add(cmdAgregar);
-            grpDatos.Controls.Add(textBox2);
-            grpDatos.Controls.Add(textBox1);
-            grpDatos.Controls.Add(txtPCompra);
+            grpDatos.Controls.Add(txtDireccion);
+            grpDatos.Controls.Add(txtTelefono);
+            grpDatos.Controls.Add(txtEmail);
             grpDatos.Controls.Add(txtNombre);
             grpDatos.Controls.Add(txtApellido);
             grpDatos.Controls.Add(label6);
@@ -63,13 +63,45 @@
             grpDatos.TabStop = false;
             grpDatos.Text = "Cargar datos";
             // 
-            // txtPCompra
+            // cmdAgregar
             // 
-            txtPCompra.Location = new Point(109, 82);
-            txtPCompra.Multiline = true;
-            txtPCompra.Name = "txtPCompra";
-            txtPCompra.Size = new Size(196, 23);
-            txtPCompra.TabIndex = 23;
+            cmdAgregar.BackColor = Color.Gainsboro;
+            cmdAgregar.Enabled = false;
+            cmdAgregar.FlatStyle = FlatStyle.Popup;
+            cmdAgregar.Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmdAgregar.Location = new Point(121, 181);
+            cmdAgregar.Name = "cmdAgregar";
+            cmdAgregar.Size = new Size(210, 42);
+            cmdAgregar.TabIndex = 27;
+            cmdAgregar.Text = "AGREGAR";
+            cmdAgregar.UseVisualStyleBackColor = false;
+            cmdAgregar.Click += cmdAgregar_Click;
+            // 
+            // txtDireccion
+            // 
+            txtDireccion.Location = new Point(121, 129);
+            txtDireccion.Multiline = true;
+            txtDireccion.Name = "txtDireccion";
+            txtDireccion.Size = new Size(568, 23);
+            txtDireccion.TabIndex = 26;
+            // 
+            // txtTelefono
+            // 
+            txtTelefono.Location = new Point(442, 82);
+            txtTelefono.Multiline = true;
+            txtTelefono.Name = "txtTelefono";
+            txtTelefono.Size = new Size(247, 23);
+            txtTelefono.TabIndex = 25;
+            txtTelefono.TextChanged += textTelefono_TextChanged;
+            // 
+            // txtEmail
+            // 
+            txtEmail.Location = new Point(109, 82);
+            txtEmail.Multiline = true;
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(196, 23);
+            txtEmail.TabIndex = 23;
+            txtEmail.TextChanged += txtEmail_TextChanged;
             // 
             // txtNombre
             // 
@@ -78,6 +110,7 @@
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(173, 23);
             txtNombre.TabIndex = 22;
+            txtNombre.TextChanged += txtNombre_TextChanged;
             // 
             // txtApellido
             // 
@@ -86,6 +119,7 @@
             txtApellido.Name = "txtApellido";
             txtApellido.Size = new Size(254, 23);
             txtApellido.TabIndex = 20;
+            txtApellido.TextChanged += txtApellido_TextChanged;
             // 
             // label6
             // 
@@ -127,34 +161,6 @@
             label1.TabIndex = 14;
             label1.Text = "Nombre:";
             // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(442, 82);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(247, 23);
-            textBox1.TabIndex = 25;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(121, 129);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(568, 23);
-            textBox2.TabIndex = 26;
-            // 
-            // cmdAgregar
-            // 
-            cmdAgregar.BackColor = Color.Gainsboro;
-            cmdAgregar.FlatStyle = FlatStyle.Popup;
-            cmdAgregar.Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmdAgregar.Location = new Point(121, 181);
-            cmdAgregar.Name = "cmdAgregar";
-            cmdAgregar.Size = new Size(210, 42);
-            cmdAgregar.TabIndex = 27;
-            cmdAgregar.Text = "AGREGAR";
-            cmdAgregar.UseVisualStyleBackColor = false;
-            // 
             // frmNuevoCliente
             // 
             AutoScaleDimensions = new SizeF(8F, 18F);
@@ -177,8 +183,8 @@
         #endregion
 
         private GroupBox grpDatos;
-        private TextBox textBox1;
-        private TextBox txtPCompra;
+        private TextBox txtTelefono;
+        private TextBox txtEmail;
         private TextBox txtNombre;
         private TextBox txtApellido;
         private Label label6;
@@ -186,7 +192,7 @@
         private Label label4;
         private Label label3;
         private Label label1;
-        private TextBox textBox2;
+        private TextBox txtDireccion;
         private Button cmdAgregar;
     }
 }

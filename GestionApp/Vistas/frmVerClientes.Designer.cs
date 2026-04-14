@@ -29,20 +29,22 @@
         private void InitializeComponent()
         {
             grpDatos = new GroupBox();
+            cmdTodos = new Button();
             cmdDeudores = new Button();
             dgvGrilla = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            Column6 = new DataGridViewTextBoxColumn();
+            Nombre = new DataGridViewTextBoxColumn();
+            Apellido = new DataGridViewTextBoxColumn();
+            Email = new DataGridViewTextBoxColumn();
+            Telefono = new DataGridViewTextBoxColumn();
+            Direccion = new DataGridViewTextBoxColumn();
+            Saldo = new DataGridViewTextBoxColumn();
             grpDatos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvGrilla).BeginInit();
             SuspendLayout();
             // 
             // grpDatos
             // 
+            grpDatos.Controls.Add(cmdTodos);
             grpDatos.Controls.Add(cmdDeudores);
             grpDatos.Controls.Add(dgvGrilla);
             grpDatos.Location = new Point(12, 12);
@@ -51,6 +53,19 @@
             grpDatos.TabIndex = 1;
             grpDatos.TabStop = false;
             grpDatos.Text = "Todos los clientes";
+            // 
+            // cmdTodos
+            // 
+            cmdTodos.BackColor = Color.Gainsboro;
+            cmdTodos.FlatStyle = FlatStyle.Popup;
+            cmdTodos.Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmdTodos.Location = new Point(24, 577);
+            cmdTodos.Name = "cmdTodos";
+            cmdTodos.Size = new Size(194, 26);
+            cmdTodos.TabIndex = 36;
+            cmdTodos.Text = "VER TODOS";
+            cmdTodos.UseVisualStyleBackColor = false;
+            cmdTodos.Click += cmdTodos_Click;
             // 
             // cmdDeudores
             // 
@@ -63,11 +78,12 @@
             cmdDeudores.TabIndex = 35;
             cmdDeudores.Text = "VER DEUDORES";
             cmdDeudores.UseVisualStyleBackColor = false;
+            cmdDeudores.Click += cmdDeudores_Click;
             // 
             // dgvGrilla
             // 
             dgvGrilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6 });
+            dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Nombre, Apellido, Email, Telefono, Direccion, Saldo });
             dgvGrilla.Location = new Point(24, 36);
             dgvGrilla.Name = "dgvGrilla";
             dgvGrilla.ReadOnly = true;
@@ -76,47 +92,53 @@
             dgvGrilla.Size = new Size(917, 516);
             dgvGrilla.TabIndex = 1;
             // 
-            // Column1
+            // Nombre
             // 
-            Column1.HeaderText = "Nombre";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 200;
+            Nombre.DataPropertyName = "Nombre";
+            Nombre.HeaderText = "Nombre";
+            Nombre.Name = "Nombre";
+            Nombre.ReadOnly = true;
+            Nombre.Width = 200;
             // 
-            // Column2
+            // Apellido
             // 
-            Column2.HeaderText = "Apellido";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Width = 150;
+            Apellido.DataPropertyName = "Apellido";
+            Apellido.HeaderText = "Apellido";
+            Apellido.Name = "Apellido";
+            Apellido.ReadOnly = true;
+            Apellido.Width = 150;
             // 
-            // Column3
+            // Email
             // 
-            Column3.HeaderText = "Email";
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
-            Column3.Width = 150;
+            Email.DataPropertyName = "Email";
+            Email.HeaderText = "Email";
+            Email.Name = "Email";
+            Email.ReadOnly = true;
+            Email.Width = 150;
             // 
-            // Column4
+            // Telefono
             // 
-            Column4.HeaderText = "Teléfono";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            Column4.Width = 120;
+            Telefono.DataPropertyName = "Telefono";
+            Telefono.HeaderText = "Teléfono";
+            Telefono.Name = "Telefono";
+            Telefono.ReadOnly = true;
+            Telefono.Width = 120;
             // 
-            // Column5
+            // Direccion
             // 
-            Column5.HeaderText = "Dirección";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
-            Column5.Width = 130;
+            Direccion.DataPropertyName = "Direccion";
+            Direccion.HeaderText = "Dirección";
+            Direccion.Name = "Direccion";
+            Direccion.ReadOnly = true;
+            Direccion.Width = 130;
             // 
-            // Column6
+            // Saldo
             // 
-            Column6.HeaderText = "Saldo";
-            Column6.Name = "Column6";
-            Column6.ReadOnly = true;
-            Column6.Width = 160;
+            Saldo.DataPropertyName = "Saldo";
+            Saldo.HeaderText = "Saldo";
+            Saldo.Name = "Saldo";
+            Saldo.ReadOnly = true;
+            Saldo.Width = 160;
             // 
             // frmVerClientes
             // 
@@ -140,11 +162,12 @@
         private GroupBox grpDatos;
         private Button cmdDeudores;
         private DataGridView dgvGrilla;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
-        private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column5;
-        private DataGridViewTextBoxColumn Column6;
+        private Button cmdTodos;
+        private DataGridViewTextBoxColumn Nombre;
+        private DataGridViewTextBoxColumn Apellido;
+        private DataGridViewTextBoxColumn Email;
+        private DataGridViewTextBoxColumn Telefono;
+        private DataGridViewTextBoxColumn Direccion;
+        private DataGridViewTextBoxColumn Saldo;
     }
 }

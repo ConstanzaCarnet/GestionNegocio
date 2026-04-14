@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GestionApp.src.DTOs.Request;
+using GestionApp.src.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +17,29 @@ namespace GestionApp
         public frmCargarPago()
         {
             InitializeComponent();
+        }
+
+        private void cmdCargar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var service = new PagoService();
+                
+                var dto = new CrearPagoDto
+                {
+                    IdCliente = (int)cmbCliente.SelectedValue,
+                    Monto = decimal.Parse(txtMonto.Text),
+                    MetodoPago = cmbMetodo.Text
+                };
+
+                service.RegistrarPago(dto);
+
+                MessageBox.Show("Pago registrado correctamente");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

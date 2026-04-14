@@ -29,23 +29,23 @@
         private void InitializeComponent()
         {
             grpDatos = new GroupBox();
+            cmbMetodo = new ComboBox();
             cmbCliente = new ComboBox();
             label2 = new Label();
             cmdCargar = new Button();
-            txtPCompra = new TextBox();
+            txtMonto = new TextBox();
             label6 = new Label();
             label4 = new Label();
-            cmbFormaPago = new ComboBox();
             grpDatos.SuspendLayout();
             SuspendLayout();
             // 
             // grpDatos
             // 
-            grpDatos.Controls.Add(cmbFormaPago);
+            grpDatos.Controls.Add(cmbMetodo);
             grpDatos.Controls.Add(cmbCliente);
             grpDatos.Controls.Add(label2);
             grpDatos.Controls.Add(cmdCargar);
-            grpDatos.Controls.Add(txtPCompra);
+            grpDatos.Controls.Add(txtMonto);
             grpDatos.Controls.Add(label6);
             grpDatos.Controls.Add(label4);
             grpDatos.Location = new Point(12, 12);
@@ -54,6 +54,14 @@
             grpDatos.TabIndex = 1;
             grpDatos.TabStop = false;
             grpDatos.Text = "Cargar datos";
+            // 
+            // cmbMetodo
+            // 
+            cmbMetodo.FormattingEnabled = true;
+            cmbMetodo.Location = new Point(196, 130);
+            cmbMetodo.Name = "cmbMetodo";
+            cmbMetodo.Size = new Size(257, 26);
+            cmbMetodo.TabIndex = 38;
             // 
             // cmbCliente
             // 
@@ -82,14 +90,15 @@
             cmdCargar.TabIndex = 27;
             cmdCargar.Text = "CARGAR";
             cmdCargar.UseVisualStyleBackColor = false;
+            cmdCargar.Click += cmdCargar_Click;
             // 
-            // txtPCompra
+            // txtMonto
             // 
-            txtPCompra.Location = new Point(114, 85);
-            txtPCompra.Multiline = true;
-            txtPCompra.Name = "txtPCompra";
-            txtPCompra.Size = new Size(339, 23);
-            txtPCompra.TabIndex = 23;
+            txtMonto.Location = new Point(114, 85);
+            txtMonto.Multiline = true;
+            txtMonto.Name = "txtMonto";
+            txtMonto.Size = new Size(339, 23);
+            txtMonto.TabIndex = 23;
             // 
             // label6
             // 
@@ -106,14 +115,6 @@
             label4.Size = new Size(136, 24);
             label4.TabIndex = 17;
             label4.Text = "Forma de pago:";
-            // 
-            // cmbFormaPago
-            // 
-            cmbFormaPago.FormattingEnabled = true;
-            cmbFormaPago.Location = new Point(196, 130);
-            cmbFormaPago.Name = "cmbFormaPago";
-            cmbFormaPago.Size = new Size(257, 26);
-            cmbFormaPago.TabIndex = 38;
             // 
             // frmCargarPago
             // 
@@ -138,11 +139,11 @@
 
         private GroupBox grpDatos;
         private Button cmdCargar;
-        private TextBox txtPCompra;
+        private TextBox txtMonto;
         private Label label6;
         private Label label4;
         private ComboBox cmbCliente;
         private Label label2;
-        private ComboBox cmbFormaPago;
+        private ComboBox cmbMetodo;
     }
 }

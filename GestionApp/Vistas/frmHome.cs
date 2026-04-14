@@ -54,12 +54,6 @@ namespace GestionApp
             ventana.ShowDialog();
         }
 
-        private void clientesConDeudaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmClientesDeudores ventanas = new frmClientesDeudores();
-            ventanas.ShowDialog();
-        }
-
         private void cargarPagoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCargarPago ventanas = new frmCargarPago();

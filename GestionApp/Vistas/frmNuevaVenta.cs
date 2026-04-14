@@ -16,5 +16,14 @@ namespace GestionApp
         {
             InitializeComponent();
         }
+        /*
+        private List<CreateDetalleVentaDto> _items = new();
+        private int _cuentaIdSeleccionada;
+        */
+
+        private void cmdContinuar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -75,6 +75,7 @@
             cmdContinuar.TabIndex = 27;
             cmdContinuar.Text = "CONTINUAR";
             cmdContinuar.UseVisualStyleBackColor = false;
+            cmdContinuar.Click += cmdContinuar_Click;
             // 
             // cbmClientes
             // 
