@@ -30,7 +30,7 @@
         {
             grpDatos = new GroupBox();
             cmdAgregar = new Button();
-            cbmCategorias = new ComboBox();
+            cmbCategoria = new ComboBox();
             txtPCompra = new TextBox();
             txtNombre = new TextBox();
             txtDescripcion = new TextBox();
@@ -48,7 +48,7 @@
             // grpDatos
             // 
             grpDatos.Controls.Add(cmdAgregar);
-            grpDatos.Controls.Add(cbmCategorias);
+            grpDatos.Controls.Add(cmbCategoria);
             grpDatos.Controls.Add(txtPCompra);
             grpDatos.Controls.Add(txtNombre);
             grpDatos.Controls.Add(txtDescripcion);
@@ -72,6 +72,7 @@
             // cmdAgregar
             // 
             cmdAgregar.BackColor = Color.Gainsboro;
+            cmdAgregar.Enabled = false;
             cmdAgregar.FlatStyle = FlatStyle.Popup;
             cmdAgregar.Location = new Point(144, 319);
             cmdAgregar.Name = "cmdAgregar";
@@ -79,14 +80,15 @@
             cmdAgregar.TabIndex = 14;
             cmdAgregar.Text = "AGREGAR";
             cmdAgregar.UseVisualStyleBackColor = false;
+            cmdAgregar.Click += cmdAgregar_Click;
             // 
-            // cbmCategorias
+            // cmbCategoria
             // 
-            cbmCategorias.FormattingEnabled = true;
-            cbmCategorias.Location = new Point(144, 126);
-            cbmCategorias.Name = "cbmCategorias";
-            cbmCategorias.Size = new Size(224, 26);
-            cbmCategorias.TabIndex = 13;
+            cmbCategoria.FormattingEnabled = true;
+            cmbCategoria.Location = new Point(144, 126);
+            cmbCategoria.Name = "cmbCategoria";
+            cmbCategoria.Size = new Size(224, 26);
+            cmbCategoria.TabIndex = 13;
             // 
             // txtPCompra
             // 
@@ -95,6 +97,7 @@
             txtPCompra.Name = "txtPCompra";
             txtPCompra.Size = new Size(163, 23);
             txtPCompra.TabIndex = 12;
+            txtPCompra.TextChanged += txtPCompra_TextChanged;
             // 
             // txtNombre
             // 
@@ -103,6 +106,7 @@
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(224, 23);
             txtNombre.TabIndex = 11;
+            txtNombre.TextChanged += txtNombre_TextChanged;
             // 
             // txtDescripcion
             // 
@@ -119,6 +123,7 @@
             txtStock.Name = "txtStock";
             txtStock.Size = new Size(254, 23);
             txtStock.TabIndex = 9;
+            txtStock.TextChanged += txtStock_TextChanged;
             // 
             // txtPVenta
             // 
@@ -127,6 +132,7 @@
             txtPVenta.Name = "txtPVenta";
             txtPVenta.Size = new Size(177, 23);
             txtPVenta.TabIndex = 8;
+            txtPVenta.TextChanged += txtPVenta_TextChanged;
             // 
             // label6
             // 
@@ -159,7 +165,6 @@
             label3.Size = new Size(64, 28);
             label3.TabIndex = 3;
             label3.Text = "Stock:";
-            label3.Click += label3_Click;
             // 
             // label2
             // 
@@ -191,6 +196,7 @@
             Name = "frmNuevoProducto";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Nuevo producto";
+            Load += frmNuevoProducto_Load;
             grpDatos.ResumeLayout(false);
             grpDatos.PerformLayout();
             ResumeLayout(false);
@@ -210,7 +216,7 @@
         private TextBox txtDescripcion;
         private TextBox txtStock;
         private TextBox txtPVenta;
-        private ComboBox cbmCategorias;
+        private ComboBox cmbCategoria;
         private Button cmdAgregar;
     }
 }

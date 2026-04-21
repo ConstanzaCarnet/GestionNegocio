@@ -6,17 +6,19 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using GestionApp.src.DTOs;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestionApp.src.Models
 {
     public class Venta
     {
         public int IdVenta { get; private set; }
-        public int IdCliente { get; private set; }
-        //una venta puede tener varios detalles de venta, por lo que se tiene una relación de uno a muchos entre venta y detalle de venta
-        private readonly List<DetalleVenta> _detalles = new();
-        public IReadOnlyCollection<DetalleVenta> Detalles => _detalles;
-        public decimal MontoTotal => _detalles.Sum(d => d.Subtotal);
+        public int IdCliente { get; set; }
+
+        [ForeignKey("IdCliente")]
+        public virtual Cliente Cliente { get; set; }
+        public List<DetalleVenta> Detalles { get; set; } = new();
+        public decimal MontoTotal => Detalles.Sum(d => d.Subtotal);
         public DateTime Fecha { get; private set; } = DateTime.Now;
 
 
@@ -36,7 +38,7 @@ namespace GestionApp.src.Models
             if (producto.Stock < cantidad)
                 throw new Exception("Stock insuficiente");
             //revisar si el producto ya existe
-            var existente = _detalles.FirstOrDefault(d => d.IdProducto == producto.IdProducto);
+            var existente = Detalles.FirstOrDefault(d => d.IdProducto == producto.IdProducto);
             if (existente != null)
             {
                 //aumento la cantidad del detalle
@@ -46,25 +48,22 @@ namespace GestionApp.src.Models
             else
             {
                 //cargar nuevo detalle
-                var detalle = new DetalleVenta(producto.IdProducto, cantidad, producto.PrecioVenta);
-                _detalles.Add(detalle);
+                Detalles.Add(new DetalleVenta(producto.IdProducto, cantidad, producto.PrecioVenta));
             }
-            //actualizo stock
-            producto.DescontarStock(cantidad);
         }
         //quitar elemento a detalle
         public void QuitarDetalle(int idDetalle)
         {
-            var detalle = _detalles.FirstOrDefault(d => d.IdDetalle == idDetalle);
+            var detalle = Detalles.FirstOrDefault(d => d.IdDetalle == idDetalle);
             if (detalle == null)
                 throw new Exception("Detalle no encontrado");
-            _detalles.Remove(detalle);
+            Detalles.Remove(detalle);
         }
 
         //limpiar todos los elementos del detalle de venta
         public void LimpiarDetalles()
         {
-            _detalles.Clear();
+            Detalles.Clear();
         }
 
 

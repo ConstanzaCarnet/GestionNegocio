@@ -16,5 +16,7 @@ namespace GestionApp.src.DTOs.Response
         public string Telefono { get; set; }
         public string? Direccion { get; set; }
         public decimal? Saldo { get; set; }
+
+        public string? NombreCompleto => $"{Nombre} {Apellido}";
     }
 }

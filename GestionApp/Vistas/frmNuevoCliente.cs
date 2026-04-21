@@ -77,12 +77,17 @@ namespace GestionApp
 
         private void cmdAgregar_Click(object sender, EventArgs e)
         {
+            var direccion = txtDireccion.Text;
             //verificamos valores de email
             if (!ValidarEmail(txtEmail.Text))
             {
                 MessageBox.Show("Verifica el email!");
                 txtEmail.Text = "";
                 return;
+            }
+            if(direccion == "")
+            {
+                direccion = "Sin dirección registrada";//le doy un valor por defecto en caso de que no se cargue direccion
             }
             //instancio ClienteDto
             CrearClienteDto cliente = new CrearClienteDto();
@@ -91,7 +96,7 @@ namespace GestionApp
             cliente.Apellido = txtApellido.Text;
             cliente.Email = txtEmail.Text;
             cliente.Telefono = txtTelefono.Text;
-            cliente.Direccion = txtDireccion.Text;
+            cliente.Direccion = direccion;
             //llamo metodo del servicio
             servicio.CrearCliente(cliente);
             MessageBox.Show("Cliente creado con éxito!");

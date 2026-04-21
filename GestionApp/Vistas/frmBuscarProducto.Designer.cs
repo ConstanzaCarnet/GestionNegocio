@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             grpBuscar = new GroupBox();
-            txtCantidad = new TextBox();
-            label3 = new Label();
-            dgvGrilla = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
-            Column6 = new DataGridViewTextBoxColumn();
             cmdBuscar = new Button();
+            dgvGrilla = new DataGridView();
+            Nombre = new DataGridViewTextBoxColumn();
+            PrecioCompra = new DataGridViewTextBoxColumn();
+            PrecioVenta = new DataGridViewTextBoxColumn();
+            Stock = new DataGridViewTextBoxColumn();
+            Categoria = new DataGridViewTextBoxColumn();
+            txtProducto = new TextBox();
+            label3 = new Label();
             grpBuscar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvGrilla).BeginInit();
             SuspendLayout();
@@ -47,7 +47,7 @@
             // 
             grpBuscar.Controls.Add(cmdBuscar);
             grpBuscar.Controls.Add(dgvGrilla);
-            grpBuscar.Controls.Add(txtCantidad);
+            grpBuscar.Controls.Add(txtProducto);
             grpBuscar.Controls.Add(label3);
             grpBuscar.Location = new Point(12, 12);
             grpBuscar.Name = "grpBuscar";
@@ -55,76 +55,6 @@
             grpBuscar.TabIndex = 0;
             grpBuscar.TabStop = false;
             grpBuscar.Text = "Buscar";
-            // 
-            // txtCantidad
-            // 
-            txtCantidad.Location = new Point(417, 46);
-            txtCantidad.Multiline = true;
-            txtCantidad.Name = "txtCantidad";
-            txtCantidad.Size = new Size(247, 23);
-            txtCantidad.TabIndex = 50;
-            // 
-            // label3
-            // 
-            label3.Location = new Point(217, 49);
-            label3.Name = "label3";
-            label3.Size = new Size(194, 22);
-            label3.TabIndex = 49;
-            label3.Text = "Producto/tipo de producto:";
-            // 
-            // dgvGrilla
-            // 
-            dgvGrilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5, Column6 });
-            dgvGrilla.Location = new Point(22, 152);
-            dgvGrilla.Name = "dgvGrilla";
-            dgvGrilla.ReadOnly = true;
-            dgvGrilla.RowHeadersVisible = false;
-            dgvGrilla.ScrollBars = ScrollBars.Vertical;
-            dgvGrilla.Size = new Size(918, 230);
-            dgvGrilla.TabIndex = 51;
-            // 
-            // Column1
-            // 
-            Column1.HeaderText = "Nombre";
-            Column1.Name = "Column1";
-            Column1.ReadOnly = true;
-            Column1.Width = 200;
-            // 
-            // Column2
-            // 
-            Column2.HeaderText = "Precio de lista";
-            Column2.Name = "Column2";
-            Column2.ReadOnly = true;
-            Column2.Width = 150;
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Precio de venta";
-            Column3.Name = "Column3";
-            Column3.ReadOnly = true;
-            Column3.Width = 150;
-            // 
-            // Column4
-            // 
-            Column4.HeaderText = "Stock";
-            Column4.Name = "Column4";
-            Column4.ReadOnly = true;
-            Column4.Width = 120;
-            // 
-            // Column5
-            // 
-            Column5.HeaderText = "Estado";
-            Column5.Name = "Column5";
-            Column5.ReadOnly = true;
-            Column5.Width = 130;
-            // 
-            // Column6
-            // 
-            Column6.HeaderText = "Categoría";
-            Column6.Name = "Column6";
-            Column6.ReadOnly = true;
-            Column6.Width = 160;
             // 
             // cmdBuscar
             // 
@@ -137,6 +67,81 @@
             cmdBuscar.TabIndex = 52;
             cmdBuscar.Text = "BUSCAR";
             cmdBuscar.UseVisualStyleBackColor = false;
+            cmdBuscar.Click += cmdBuscar_Click;
+            // 
+            // dgvGrilla
+            // 
+            dgvGrilla.AllowUserToAddRows = false;
+            dgvGrilla.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle3.Font = new Font("Verdana", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            dgvGrilla.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dgvGrilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Nombre, PrecioCompra, PrecioVenta, Stock, Categoria });
+            dgvGrilla.Location = new Point(50, 155);
+            dgvGrilla.Name = "dgvGrilla";
+            dgvGrilla.ReadOnly = true;
+            dgvGrilla.RowHeadersVisible = false;
+            dgvGrilla.ScrollBars = ScrollBars.Vertical;
+            dgvGrilla.Size = new Size(863, 230);
+            dgvGrilla.TabIndex = 51;
+            // 
+            // Nombre
+            // 
+            Nombre.DataPropertyName = "Nombre";
+            Nombre.HeaderText = "Nombre";
+            Nombre.Name = "Nombre";
+            Nombre.ReadOnly = true;
+            Nombre.Width = 230;
+            // 
+            // PrecioCompra
+            // 
+            PrecioCompra.DataPropertyName = "PrecioCompra";
+            PrecioCompra.HeaderText = "Precio de lista";
+            PrecioCompra.Name = "PrecioCompra";
+            PrecioCompra.ReadOnly = true;
+            PrecioCompra.Width = 160;
+            // 
+            // PrecioVenta
+            // 
+            PrecioVenta.DataPropertyName = "PrecioVenta";
+            PrecioVenta.HeaderText = "Precio de venta";
+            PrecioVenta.Name = "PrecioVenta";
+            PrecioVenta.ReadOnly = true;
+            PrecioVenta.Width = 160;
+            // 
+            // Stock
+            // 
+            Stock.DataPropertyName = "Stock";
+            Stock.HeaderText = "Stock";
+            Stock.Name = "Stock";
+            Stock.ReadOnly = true;
+            Stock.Width = 120;
+            // 
+            // Categoria
+            // 
+            Categoria.DataPropertyName = "Categoria";
+            Categoria.HeaderText = "Categoría";
+            Categoria.Name = "Categoria";
+            Categoria.ReadOnly = true;
+            Categoria.Width = 180;
+            // 
+            // txtProducto
+            // 
+            txtProducto.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            txtProducto.Location = new Point(357, 46);
+            txtProducto.Name = "txtProducto";
+            txtProducto.Size = new Size(307, 26);
+            txtProducto.TabIndex = 50;
+            // 
+            // label3
+            // 
+            label3.Location = new Point(217, 46);
+            label3.Name = "label3";
+            label3.Size = new Size(134, 22);
+            label3.TabIndex = 49;
+            label3.Text = "Producto:";
             // 
             // frmBuscarProducto
             // 
@@ -152,6 +157,7 @@
             Name = "frmBuscarProducto";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Buscar producto";
+            Load += frmBuscarProducto_Load;
             grpBuscar.ResumeLayout(false);
             grpBuscar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvGrilla).EndInit();
@@ -161,15 +167,14 @@
         #endregion
 
         private GroupBox grpBuscar;
-        private TextBox txtCantidad;
+        private TextBox txtProducto;
         private Label label3;
         private DataGridView dgvGrilla;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
-        private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column5;
-        private DataGridViewTextBoxColumn Column6;
         private Button cmdBuscar;
+        private DataGridViewTextBoxColumn Nombre;
+        private DataGridViewTextBoxColumn PrecioCompra;
+        private DataGridViewTextBoxColumn PrecioVenta;
+        private DataGridViewTextBoxColumn Stock;
+        private DataGridViewTextBoxColumn Categoria;
     }
 }

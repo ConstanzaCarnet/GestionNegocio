@@ -29,9 +29,24 @@
         private void InitializeComponent()
         {
             grpDatos = new GroupBox();
-            textBox2 = new TextBox();
-            textBox1 = new TextBox();
-            txtPCompra = new TextBox();
+            txtCliente = new TextBox();
+            lblSaldo = new Label();
+            label8 = new Label();
+            cmdCargarPago = new Button();
+            label7 = new Label();
+            dgvGrilla = new DataGridView();
+            Fecha = new DataGridViewTextBoxColumn();
+            Tipo = new DataGridViewTextBoxColumn();
+            Monto = new DataGridViewTextBoxColumn();
+            Detalle = new DataGridViewTextBoxColumn();
+            cmdGuardar = new Button();
+            cmdEliminar = new Button();
+            cmdModificar = new Button();
+            cmdBuscar = new Button();
+            label2 = new Label();
+            txtDireccion = new TextBox();
+            txtTelefono = new TextBox();
+            txtEmail = new TextBox();
             txtNombre = new TextBox();
             txtApellido = new TextBox();
             label6 = new Label();
@@ -39,37 +54,26 @@
             label4 = new Label();
             label3 = new Label();
             label1 = new Label();
-            label2 = new Label();
-            cmbCliente = new ComboBox();
-            cmdBuscar = new Button();
-            cmdGuardar = new Button();
-            cmdEliminar = new Button();
-            cmdModificar = new Button();
-            dataGridView1 = new DataGridView();
-            label7 = new Label();
-            cmdCargarPago = new Button();
-            lblSaldo = new Label();
-            label8 = new Label();
             grpDatos.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvGrilla).BeginInit();
             SuspendLayout();
             // 
             // grpDatos
             // 
+            grpDatos.Controls.Add(txtCliente);
             grpDatos.Controls.Add(lblSaldo);
             grpDatos.Controls.Add(label8);
             grpDatos.Controls.Add(cmdCargarPago);
             grpDatos.Controls.Add(label7);
-            grpDatos.Controls.Add(dataGridView1);
+            grpDatos.Controls.Add(dgvGrilla);
             grpDatos.Controls.Add(cmdGuardar);
             grpDatos.Controls.Add(cmdEliminar);
             grpDatos.Controls.Add(cmdModificar);
             grpDatos.Controls.Add(cmdBuscar);
-            grpDatos.Controls.Add(cmbCliente);
             grpDatos.Controls.Add(label2);
-            grpDatos.Controls.Add(textBox2);
-            grpDatos.Controls.Add(textBox1);
-            grpDatos.Controls.Add(txtPCompra);
+            grpDatos.Controls.Add(txtDireccion);
+            grpDatos.Controls.Add(txtTelefono);
+            grpDatos.Controls.Add(txtEmail);
             grpDatos.Controls.Add(txtNombre);
             grpDatos.Controls.Add(txtApellido);
             grpDatos.Controls.Add(label6);
@@ -84,29 +88,167 @@
             grpDatos.TabStop = false;
             grpDatos.Text = "Cargar datos";
             // 
-            // textBox2
+            // txtCliente
             // 
-            textBox2.Location = new Point(117, 297);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(568, 23);
-            textBox2.TabIndex = 26;
+            txtCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            txtCliente.Location = new Point(249, 42);
+            txtCliente.Name = "txtCliente";
+            txtCliente.Size = new Size(340, 26);
+            txtCliente.TabIndex = 51;
+            txtCliente.TextChanged += txtCliente_TextChanged;
             // 
-            // textBox1
+            // lblSaldo
             // 
-            textBox1.Location = new Point(438, 250);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(247, 23);
-            textBox1.TabIndex = 25;
+            lblSaldo.BorderStyle = BorderStyle.Fixed3D;
+            lblSaldo.FlatStyle = FlatStyle.Popup;
+            lblSaldo.Location = new Point(171, 632);
+            lblSaldo.Name = "lblSaldo";
+            lblSaldo.Size = new Size(166, 28);
+            lblSaldo.TabIndex = 38;
             // 
-            // txtPCompra
+            // label8
             // 
-            txtPCompra.Location = new Point(105, 250);
-            txtPCompra.Multiline = true;
-            txtPCompra.Name = "txtPCompra";
-            txtPCompra.Size = new Size(196, 23);
-            txtPCompra.TabIndex = 23;
+            label8.Location = new Point(37, 640);
+            label8.Name = "label8";
+            label8.Size = new Size(108, 20);
+            label8.TabIndex = 37;
+            label8.Text = "Saldo total:";
+            // 
+            // cmdCargarPago
+            // 
+            cmdCargarPago.BackColor = Color.Gainsboro;
+            cmdCargarPago.FlatStyle = FlatStyle.Popup;
+            cmdCargarPago.Location = new Point(543, 640);
+            cmdCargarPago.Name = "cmdCargarPago";
+            cmdCargarPago.Size = new Size(153, 27);
+            cmdCargarPago.TabIndex = 36;
+            cmdCargarPago.Text = "CARGAR PAGO";
+            cmdCargarPago.UseVisualStyleBackColor = false;
+            // 
+            // label7
+            // 
+            label7.Location = new Point(37, 351);
+            label7.Name = "label7";
+            label7.Size = new Size(178, 24);
+            label7.TabIndex = 35;
+            label7.Text = "Movimientos del cliente:";
+            // 
+            // dgvGrilla
+            // 
+            dgvGrilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Fecha, Tipo, Monto, Detalle });
+            dgvGrilla.Location = new Point(25, 378);
+            dgvGrilla.Name = "dgvGrilla";
+            dgvGrilla.RowHeadersVisible = false;
+            dgvGrilla.ScrollBars = ScrollBars.Vertical;
+            dgvGrilla.Size = new Size(671, 241);
+            dgvGrilla.TabIndex = 34;
+            // 
+            // Fecha
+            // 
+            Fecha.DataPropertyName = "Fecha";
+            Fecha.HeaderText = "Fecha";
+            Fecha.Name = "Fecha";
+            Fecha.Width = 180;
+            // 
+            // Tipo
+            // 
+            Tipo.DataPropertyName = "Tipo";
+            Tipo.HeaderText = "Tipo";
+            Tipo.Name = "Tipo";
+            Tipo.Width = 150;
+            // 
+            // Monto
+            // 
+            Monto.DataPropertyName = "Monto";
+            Monto.HeaderText = "Monto";
+            Monto.Name = "Monto";
+            Monto.Width = 150;
+            // 
+            // Detalle
+            // 
+            Detalle.DataPropertyName = "Detalle";
+            Detalle.HeaderText = "Detalle";
+            Detalle.Name = "Detalle";
+            Detalle.Width = 180;
+            // 
+            // cmdGuardar
+            // 
+            cmdGuardar.BackColor = Color.Gainsboro;
+            cmdGuardar.FlatStyle = FlatStyle.Popup;
+            cmdGuardar.Location = new Point(25, 715);
+            cmdGuardar.Name = "cmdGuardar";
+            cmdGuardar.Size = new Size(153, 53);
+            cmdGuardar.TabIndex = 33;
+            cmdGuardar.Text = "GUARDAR";
+            cmdGuardar.UseVisualStyleBackColor = false;
+            // 
+            // cmdEliminar
+            // 
+            cmdEliminar.BackColor = Color.Gainsboro;
+            cmdEliminar.FlatStyle = FlatStyle.Popup;
+            cmdEliminar.Location = new Point(543, 715);
+            cmdEliminar.Name = "cmdEliminar";
+            cmdEliminar.Size = new Size(153, 53);
+            cmdEliminar.TabIndex = 32;
+            cmdEliminar.Text = "ELIMINAR";
+            cmdEliminar.UseVisualStyleBackColor = false;
+            // 
+            // cmdModificar
+            // 
+            cmdModificar.BackColor = Color.Gainsboro;
+            cmdModificar.FlatStyle = FlatStyle.Popup;
+            cmdModificar.Location = new Point(288, 715);
+            cmdModificar.Name = "cmdModificar";
+            cmdModificar.Size = new Size(153, 53);
+            cmdModificar.TabIndex = 31;
+            cmdModificar.Text = "MODIFICAR";
+            cmdModificar.UseVisualStyleBackColor = false;
+            // 
+            // cmdBuscar
+            // 
+            cmdBuscar.BackColor = Color.Gainsboro;
+            cmdBuscar.FlatStyle = FlatStyle.Popup;
+            cmdBuscar.Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmdBuscar.Location = new Point(379, 95);
+            cmdBuscar.Name = "cmdBuscar";
+            cmdBuscar.Size = new Size(210, 42);
+            cmdBuscar.TabIndex = 30;
+            cmdBuscar.Text = "BUSCAR";
+            cmdBuscar.UseVisualStyleBackColor = false;
+            cmdBuscar.Click += cmdBuscar_Click;
+            // 
+            // label2
+            // 
+            label2.Location = new Point(149, 45);
+            label2.Name = "label2";
+            label2.Size = new Size(94, 28);
+            label2.TabIndex = 28;
+            label2.Text = "Cliente:";
+            // 
+            // txtDireccion
+            // 
+            txtDireccion.Location = new Point(117, 297);
+            txtDireccion.Multiline = true;
+            txtDireccion.Name = "txtDireccion";
+            txtDireccion.Size = new Size(568, 23);
+            txtDireccion.TabIndex = 26;
+            // 
+            // txtTelefono
+            // 
+            txtTelefono.Location = new Point(438, 250);
+            txtTelefono.Multiline = true;
+            txtTelefono.Name = "txtTelefono";
+            txtTelefono.Size = new Size(247, 23);
+            txtTelefono.TabIndex = 25;
+            // 
+            // txtEmail
+            // 
+            txtEmail.Location = new Point(105, 250);
+            txtEmail.Multiline = true;
+            txtEmail.Name = "txtEmail";
+            txtEmail.Size = new Size(196, 23);
+            txtEmail.TabIndex = 23;
             // 
             // txtNombre
             // 
@@ -164,112 +306,6 @@
             label1.TabIndex = 14;
             label1.Text = "Nombre:";
             // 
-            // label2
-            // 
-            label2.Location = new Point(149, 45);
-            label2.Name = "label2";
-            label2.Size = new Size(94, 28);
-            label2.TabIndex = 28;
-            label2.Text = "Cliente:";
-            // 
-            // cmbCliente
-            // 
-            cmbCliente.FormattingEnabled = true;
-            cmbCliente.Location = new Point(272, 42);
-            cmbCliente.Name = "cmbCliente";
-            cmbCliente.Size = new Size(317, 26);
-            cmbCliente.TabIndex = 29;
-            // 
-            // cmdBuscar
-            // 
-            cmdBuscar.BackColor = Color.Gainsboro;
-            cmdBuscar.FlatStyle = FlatStyle.Popup;
-            cmdBuscar.Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmdBuscar.Location = new Point(379, 95);
-            cmdBuscar.Name = "cmdBuscar";
-            cmdBuscar.Size = new Size(210, 42);
-            cmdBuscar.TabIndex = 30;
-            cmdBuscar.Text = "BUSCAR";
-            cmdBuscar.UseVisualStyleBackColor = false;
-            // 
-            // cmdGuardar
-            // 
-            cmdGuardar.BackColor = Color.Gainsboro;
-            cmdGuardar.FlatStyle = FlatStyle.Popup;
-            cmdGuardar.Location = new Point(25, 715);
-            cmdGuardar.Name = "cmdGuardar";
-            cmdGuardar.Size = new Size(153, 53);
-            cmdGuardar.TabIndex = 33;
-            cmdGuardar.Text = "GUARDAR";
-            cmdGuardar.UseVisualStyleBackColor = false;
-            // 
-            // cmdEliminar
-            // 
-            cmdEliminar.BackColor = Color.Gainsboro;
-            cmdEliminar.FlatStyle = FlatStyle.Popup;
-            cmdEliminar.Location = new Point(543, 715);
-            cmdEliminar.Name = "cmdEliminar";
-            cmdEliminar.Size = new Size(153, 53);
-            cmdEliminar.TabIndex = 32;
-            cmdEliminar.Text = "ELIMINAR";
-            cmdEliminar.UseVisualStyleBackColor = false;
-            // 
-            // cmdModificar
-            // 
-            cmdModificar.BackColor = Color.Gainsboro;
-            cmdModificar.FlatStyle = FlatStyle.Popup;
-            cmdModificar.Location = new Point(288, 715);
-            cmdModificar.Name = "cmdModificar";
-            cmdModificar.Size = new Size(153, 53);
-            cmdModificar.TabIndex = 31;
-            cmdModificar.Text = "MODIFICAR";
-            cmdModificar.UseVisualStyleBackColor = false;
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(25, 378);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ScrollBars = ScrollBars.Vertical;
-            dataGridView1.Size = new Size(671, 241);
-            dataGridView1.TabIndex = 34;
-            // 
-            // label7
-            // 
-            label7.Location = new Point(37, 351);
-            label7.Name = "label7";
-            label7.Size = new Size(178, 24);
-            label7.TabIndex = 35;
-            label7.Text = "Movimientos del cliente:";
-            // 
-            // cmdCargarPago
-            // 
-            cmdCargarPago.BackColor = Color.Gainsboro;
-            cmdCargarPago.FlatStyle = FlatStyle.Popup;
-            cmdCargarPago.Location = new Point(543, 640);
-            cmdCargarPago.Name = "cmdCargarPago";
-            cmdCargarPago.Size = new Size(153, 27);
-            cmdCargarPago.TabIndex = 36;
-            cmdCargarPago.Text = "CARGAR PAGO";
-            cmdCargarPago.UseVisualStyleBackColor = false;
-            // 
-            // lblSaldo
-            // 
-            lblSaldo.BorderStyle = BorderStyle.Fixed3D;
-            lblSaldo.FlatStyle = FlatStyle.Popup;
-            lblSaldo.Location = new Point(171, 632);
-            lblSaldo.Name = "lblSaldo";
-            lblSaldo.Size = new Size(166, 28);
-            lblSaldo.TabIndex = 38;
-            // 
-            // label8
-            // 
-            label8.Location = new Point(37, 640);
-            label8.Name = "label8";
-            label8.Size = new Size(108, 20);
-            label8.TabIndex = 37;
-            label8.Text = "Saldo total:";
-            // 
             // frmBuscarCliente
             // 
             AutoScaleDimensions = new SizeF(8F, 18F);
@@ -284,9 +320,10 @@
             Name = "frmBuscarCliente";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Buscar cliente";
+            Load += frmBuscarCliente_Load;
             grpDatos.ResumeLayout(false);
             grpDatos.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvGrilla).EndInit();
             ResumeLayout(false);
         }
 
@@ -294,9 +331,9 @@
 
         private GroupBox grpDatos;
         private Label label2;
-        private TextBox textBox2;
-        private TextBox textBox1;
-        private TextBox txtPCompra;
+        private TextBox txtDireccion;
+        private TextBox txtTelefono;
+        private TextBox txtEmail;
         private TextBox txtNombre;
         private TextBox txtApellido;
         private Label label6;
@@ -305,14 +342,18 @@
         private Label label3;
         private Label label1;
         private Button cmdBuscar;
-        private ComboBox cmbCliente;
         private Label label7;
-        private DataGridView dataGridView1;
+        private DataGridView dgvGrilla;
         private Button cmdGuardar;
         private Button cmdEliminar;
         private Button cmdModificar;
         private Button cmdCargarPago;
         private Label lblSaldo;
         private Label label8;
+        private DataGridViewTextBoxColumn Fecha;
+        private DataGridViewTextBoxColumn Tipo;
+        private DataGridViewTextBoxColumn Monto;
+        private DataGridViewTextBoxColumn Detalle;
+        private TextBox txtCliente;
     }
 }

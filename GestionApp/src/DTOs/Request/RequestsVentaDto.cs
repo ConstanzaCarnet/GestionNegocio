@@ -11,4 +11,5 @@ namespace GestionApp.src.DTOs.Request
         public int IdCliente { get; set; }
         public List<CrearDetalleDto> Items { get; set; } = new();
     }
+
 }

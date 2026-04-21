@@ -49,7 +49,7 @@
             grpDatos.Controls.Add(dgvGrilla);
             grpDatos.Location = new Point(12, 12);
             grpDatos.Name = "grpDatos";
-            grpDatos.Size = new Size(966, 624);
+            grpDatos.Size = new Size(1421, 624);
             grpDatos.TabIndex = 1;
             grpDatos.TabStop = false;
             grpDatos.Text = "Todos los clientes";
@@ -72,7 +72,7 @@
             cmdDeudores.BackColor = Color.Gainsboro;
             cmdDeudores.FlatStyle = FlatStyle.Popup;
             cmdDeudores.Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmdDeudores.Location = new Point(747, 577);
+            cmdDeudores.Location = new Point(1210, 577);
             cmdDeudores.Name = "cmdDeudores";
             cmdDeudores.Size = new Size(194, 26);
             cmdDeudores.TabIndex = 35;
@@ -82,6 +82,8 @@
             // 
             // dgvGrilla
             // 
+            dgvGrilla.AllowUserToAddRows = false;
+            dgvGrilla.AllowUserToDeleteRows = false;
             dgvGrilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Nombre, Apellido, Email, Telefono, Direccion, Saldo });
             dgvGrilla.Location = new Point(24, 36);
@@ -89,7 +91,7 @@
             dgvGrilla.ReadOnly = true;
             dgvGrilla.RowHeadersVisible = false;
             dgvGrilla.ScrollBars = ScrollBars.Vertical;
-            dgvGrilla.Size = new Size(917, 516);
+            dgvGrilla.Size = new Size(1380, 516);
             dgvGrilla.TabIndex = 1;
             // 
             // Nombre
@@ -98,7 +100,7 @@
             Nombre.HeaderText = "Nombre";
             Nombre.Name = "Nombre";
             Nombre.ReadOnly = true;
-            Nombre.Width = 200;
+            Nombre.Width = 250;
             // 
             // Apellido
             // 
@@ -106,7 +108,7 @@
             Apellido.HeaderText = "Apellido";
             Apellido.Name = "Apellido";
             Apellido.ReadOnly = true;
-            Apellido.Width = 150;
+            Apellido.Width = 250;
             // 
             // Email
             // 
@@ -114,7 +116,7 @@
             Email.HeaderText = "Email";
             Email.Name = "Email";
             Email.ReadOnly = true;
-            Email.Width = 150;
+            Email.Width = 300;
             // 
             // Telefono
             // 
@@ -122,7 +124,7 @@
             Telefono.HeaderText = "Teléfono";
             Telefono.Name = "Telefono";
             Telefono.ReadOnly = true;
-            Telefono.Width = 120;
+            Telefono.Width = 170;
             // 
             // Direccion
             // 
@@ -130,7 +132,7 @@
             Direccion.HeaderText = "Dirección";
             Direccion.Name = "Direccion";
             Direccion.ReadOnly = true;
-            Direccion.Width = 130;
+            Direccion.Width = 230;
             // 
             // Saldo
             // 
@@ -145,13 +147,16 @@
             AutoScaleDimensions = new SizeF(8F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LavenderBlush;
-            ClientSize = new Size(989, 648);
+            ClientSize = new Size(1445, 648);
             Controls.Add(grpDatos);
             Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(3, 4, 3, 4);
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "frmVerClientes";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Ver todos los clientes";
+            Load += frmVerClientes_Load;
             grpDatos.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvGrilla).EndInit();
             ResumeLayout(false);

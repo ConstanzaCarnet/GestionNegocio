@@ -27,7 +27,7 @@ namespace GestionApp.src.Services
                 dto.PrecioCompra,
                 dto.PrecioVenta,
                 dto.Stock,
-                null,
+                null,//aun no tengo para cargar imágenes
                 dto.IdCategoria
                 );
             //lo guardo
@@ -40,6 +40,7 @@ namespace GestionApp.src.Services
         {
             using var db = new AppDbContext();
             return db.Productos
+                .Include(p => p.Categoria)
                 .AsNoTracking()
                 .Select(p => new ProductoDto
                 {
@@ -47,7 +48,8 @@ namespace GestionApp.src.Services
                     Nombre = p.Nombre,
                     PrecioCompra =p.PrecioCompra,
                     PrecioVenta = p.PrecioVenta,
-                    Stock = p.Stock
+                    Stock = p.Stock,
+                    Categoria =p.Categoria != null ? p.Categoria.Nombre : ""
                 })
                 .ToList();
         }
@@ -71,8 +73,34 @@ namespace GestionApp.src.Services
                 Stock = producto.Stock
             };
         }
+        //Buscar por nombre
+        public List<ProductoDto> BuscarProducto(string busqueda)
+        {
+            using var db = new AppDbContext();
+            var term = busqueda.ToLower().Trim();
+            return db.Productos
+                .Include(p => p.Categoria)
+                .Where(p => p.Nombre.ToLower().Contains(term))
+                .Select(p => new ProductoDto
+                {
+                    IdProducto = p.IdProducto,
+                    Nombre = p.Nombre,
+                    PrecioCompra = p.PrecioCompra,
+                    PrecioVenta = p.PrecioVenta,
+                    Stock = p.Stock,
+                    Categoria = p.Categoria != null ? p.Categoria.Nombre : "Sin Categoría"
+                }).ToList();
+        }
+        //Para sugerir en busqueda por nombre
+        public string[] ObtenerNombresSugeridos()
+        {
+            using var db = new AppDbContext();
+            return db.Productos.Select(p => p.Nombre).ToArray();
+        }
+
+
         //buscar producto por categoría
-        public List<ProductoDto> BuscarCategoria(int categoria)
+        public List<ProductoDto> BuscarPorCategoria(int categoria)
         {
             using var db = new AppDbContext();
             return db.Productos
@@ -85,7 +113,8 @@ namespace GestionApp.src.Services
                     Nombre = p.Nombre,
                     PrecioCompra = p.PrecioCompra,
                     PrecioVenta = p.PrecioVenta,
-                    Stock = p.Stock
+                    Stock = p.Stock,
+                    Categoria = p.Categoria.Nombre
                 })
                 .ToList();
         }
@@ -96,8 +125,26 @@ namespace GestionApp.src.Services
             using var db = new AppDbContext();
             var producto = db.Productos.FirstOrDefault(p => p.IdProducto == dto.IdProducto);
 
-            if (producto == null) throw new Exception("Error, el producto no se encontró");
+            if (producto == null)
+            {
+                MessageBox.Show("Error, el producto no se encontró", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             producto.CambiarDatos(dto.Nombre, dto.PrecioVenta, dto.Stock, dto.IdCategoria);
+            db.SaveChanges();
+        }
+
+        //Eliminar producto
+        public void Eliminar(int id)
+        {
+            using var db = new AppDbContext();
+            var producto = db.Productos.FirstOrDefault(p => p.IdProducto == id);
+            if (producto == null)
+            {
+                MessageBox.Show("Error, el producto no se encontró", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            db.Remove(producto);
             db.SaveChanges();
         }
 

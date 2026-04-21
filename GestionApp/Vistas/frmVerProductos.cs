@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestionApp.src.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,14 @@ namespace GestionApp
         public frmVerProductos()
         {
             InitializeComponent();
+        }
+
+        ProductoService service = new ProductoService();
+        private void frmVerProductos_Load(object sender, EventArgs e)
+        {
+            var data = service.ObtenerTodos();
+            dgvGrilla.AutoGenerateColumns = false;
+            dgvGrilla.DataSource = data;
         }
     }
 }

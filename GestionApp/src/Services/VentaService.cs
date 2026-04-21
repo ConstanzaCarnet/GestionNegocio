@@ -1,67 +1,121 @@
 ﻿using GestionApp.src.Data;
 using GestionApp.src.DTOs.Request;
+using GestionApp.src.DTOs.Response;
 using GestionApp.src.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GestionApp.src.Services;
 
 public class  VentaService
 {
-    //Aqui inyectamos el contexto de la base de datos para poder acceder a las tablas y realizar operaciones CRUD, en este caso, para crear una nueva venta.
-    //es como decirle a la clase VentaService que necesita una instancia de AppDbContext para funcionar, y el framework se encargará de proporcionarla cuando se cree una instancia de VentaService
-    //esto es parte del patrón de diseño conocido como Inyección de Dependencias, que ayuda a mantener el código más limpio, modular y fácil de probar.
-    private readonly AppDbContext db;
-    public VentaService(AppDbContext context)
-    {
-        db = context;
-    }
-
-    //los metodos que tendremos en service tendran la logica de negocio, es decir, las reglas y procesos que se deben seguir para realizar una venta, como validar los datos, calcular el monto total, etc.
-    //En este caso, el método CrearVenta se encargará de agregar una nueva venta a la base de datos utilizando el contexto inyectado.
     public void CrearVenta(CrearVentaDto dto)
     {
-        // Validación básica
+        using var db = new AppDbContext();
+        //buscamos y validamos el cliente
+        var cliente = db.Clientes.FirstOrDefault(c => c.IdCliente == dto.IdCliente);
+        if (cliente == null) throw new Exception("Cliente no encontrado");
+        
+        // Validación de ítems
         if (dto.Items == null || !dto.Items.Any())
             throw new Exception("La venta debe tener al menos un producto");
 
-        var cliente = db.Clientes
-            .FirstOrDefault(c => c.IdCliente == dto.IdCliente);
-
-        if (cliente == null)
-            throw new Exception("Cliente no encontrado");
-
+        //creo la venta(vista macro del ticket de compra diriamos)
         var venta = new Venta(dto.IdCliente);
 
-        // Cargar productos en lote (mejor performance)
-        var productosIds = dto.Items.Select(i => i.ProductoId).ToList();
+        // Busco productos(items) para crear el detalle de venta
+        var productosIds = dto.Items.Select(i => i.IdProducto).ToList();
 
         var productos = db.Productos
             .Where(p => productosIds.Contains(p.IdProducto))
             .ToList();
-
+        //creo cada detalle("letra chica" del ticket de compra)
         foreach (var item in dto.Items)
         {
             var producto = productos
-                .FirstOrDefault(p => p.IdProducto == item.ProductoId);
+                .FirstOrDefault(p => p.IdProducto == item.IdProducto);
 
             if (producto == null)
-                throw new Exception($"Producto {item.ProductoId} no encontrado");
-
+                throw new Exception($"Producto {item.IdProducto} no encontrado");
+            //valido y descuento el stock <------Importante para actualizar stock!!
+            producto.DescontarStock(item.Cantidad);
+            //agrego
             venta.AgregarProducto(producto, item.Cantidad);
         }
 
         db.Ventas.Add(venta);
 
         // Cuenta corriente        
-        var cuenta = db.CuentasCorrientes
-            .First(c => c.IdCliente == dto.IdCliente);
+        var cuenta = db.CuentasCorrientes.FirstOrDefault(c => c.IdCliente == dto.IdCliente);
+        if (cuenta == null) throw new Exception("El cliente no tiene una cuenta corriente asociada");
         //sumo el cargo
         cuenta.AplicarCargo(venta.MontoTotal);
         //guardo los cambios en base de datos
         db.SaveChanges();
+    }
+
+    //Mostrar ventas
+    public List<VentaListDto> ObtenerVentasFiltrar()
+    {
+        using var db = new AppDbContext();
+        var ventas = db.Ventas
+            .Include(v => v.Cliente)
+            .Include(v => v.Detalles)
+            .ThenInclude(v => v.Producto)
+            .AsQueryable();
+
+        return ventas.Select(v => new VentaListDto
+        {
+            IdVenta = v.IdVenta,
+            Cliente = v.Cliente.Nombre + " " + v.Cliente.Apellido,
+            Total = v.MontoTotal,
+            Fecha = v.Fecha
+        }).ToList();
+    }
+    //obtener ventas filtradas
+    public List<VentaListDto> ObtenerVentasFiltrar(string filtro, int id, int? anio = null)
+    {
+        using var db = new AppDbContext();
+        var ventas = db.Ventas
+            .Include(v=>v.Cliente)
+            .Include(v => v.Detalles)
+            .ThenInclude(v => v.Producto)
+            .AsQueryable();
+
+        //filtro
+        if (filtro == "Cliente")
+            ventas = ventas.Where(v => v.IdCliente == id);
+        else if (filtro == "Producto")
+            ventas = ventas.Where(v => v.Detalles.Any(d => d.IdProducto == id));
+        else if(filtro == "Mes" && anio.HasValue)
+            ventas = ventas.Where(v => v.Fecha.Month == id && v.Fecha.Year == anio.Value);
+        //devuelvo ya filtrado
+        return ventas.Select(v => new VentaListDto
+        {
+            IdVenta = v.IdVenta,
+            Cliente = v.Cliente.Nombre + " " + v.Cliente.Apellido,
+            Total = v.MontoTotal,
+            Fecha = v.Fecha
+        }).ToList();
+    }
+    //obtener detalle de ventas
+    public List<DetalleVentaDto> ObtenerDetalleDeVenta(int idVenta)
+    {
+        using var db = new AppDbContext();
+        return db.DetallesVenta
+            .Where(d => d.IdVenta == idVenta)
+            .Include(d => d.Producto)
+            .Select(d => new DetalleVentaDto
+            {
+                Producto = d.Producto.Nombre,
+                Cantidad = d.Cantidad,
+                PrecioUnitario = d.PrecioUnitario,
+                Subtotal = d.Cantidad * d.PrecioUnitario
+            }).ToList();
     }
 }

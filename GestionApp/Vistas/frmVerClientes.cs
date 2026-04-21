@@ -17,6 +17,8 @@ namespace GestionApp
         public frmVerClientes()
         {
             InitializeComponent();
+            //seteo la grilla para que no me duplique los datos
+            dgvGrilla.AutoGenerateColumns = false;
         }
 
         ClienteService service = new ClienteService();
@@ -28,6 +30,11 @@ namespace GestionApp
         private void cmdDeudores_Click(object sender, EventArgs e)
         {
             dgvGrilla.DataSource = service.ObtenerDeudores();
+        }
+
+        private void frmVerClientes_Load(object sender, EventArgs e)
+        {
+            dgvGrilla.DataSource = service.ObtenerTodos();
         }
     }
 }

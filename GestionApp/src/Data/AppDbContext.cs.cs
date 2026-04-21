@@ -51,19 +51,30 @@ namespace GestionApp.src.Data
                 .HasOne(p => p.Categoria)
                 .WithMany(c => c.Productos)
                 .HasForeignKey(p => p.IdCategoria);
-
+            //relacion Venta -> cliente
+            modelBuilder.Entity<Venta>()
+                .HasOne(v=>v.Cliente)
+                .WithMany()
+                .HasForeignKey(v => v.IdCliente)
+                .IsRequired();
+            //relacion Venta->detalles
             modelBuilder.Entity<Venta>()
                 .HasMany(v => v.Detalles)
                 .WithOne(d => d.Venta)
-                .HasForeignKey(d => d.IdVenta);
+                .HasForeignKey(d => d.IdVenta)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Venta>()
                 .Navigation(v => v.Detalles)
                 .UsePropertyAccessMode(PropertyAccessMode.Field);
-
+            //relacion DetalleVenta -> Producto
             modelBuilder.Entity<DetalleVenta>()
                 .Property(d => d.PrecioUnitario)
                 .HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<DetalleVenta>()
+                .HasOne(d => d.Producto)
+                .WithMany()
+                .HasForeignKey(d => d.IdProducto);
 
             //cuenta, relacion cliente 1-1
             modelBuilder.Entity<CuentaCorriente>()

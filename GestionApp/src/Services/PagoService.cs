@@ -1,6 +1,7 @@
 ﻿using GestionApp.src.Data;
 using GestionApp.src.DTOs.Request;
 using GestionApp.src.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,53 @@ namespace GestionApp.src.Services
             //guardo
             db.Pagos.Add(pago);
             db.SaveChanges();
+        }
+
+        //mostrar todos los pagos
+        public List<Pago> Mostrar()
+        {
+            using var db = new AppDbContext();
+            return db.Pagos
+                .AsNoTracking()
+                .Select(p => new Pago
+                {
+                    IdPago = p.IdPago,
+                    IdCliente = p.IdCliente,
+                    MetodoPago = p.MetodoPago,
+                    Monto = p.Monto,
+                    Fecha = p.Fecha,
+                }).ToList();
+        }
+
+        //buscar pagos por IdCliente
+        public List<Pago> BuscarPorIdCliente(int id)
+        {
+            using var db = new AppDbContext();
+            return db.Pagos
+                .Where(c => c.IdCliente == id)
+                .Select(p => new Pago
+                {
+                    IdPago = p.IdPago,
+                    IdCliente = p.IdCliente,
+                    MetodoPago = p.MetodoPago,
+                    Monto = p.Monto,
+                    Fecha = p.Fecha
+                }).ToList();
+        }
+        //buscar pagos por Fecha
+        public List<Pago> BuscarPorIdCliente(int? fecha)
+        {
+            using var db = new AppDbContext();
+            return db.Pagos
+                .Where(c => c.Fecha.Month == fecha.Value)
+                .Select(p => new Pago
+                {
+                    IdPago = p.IdPago,
+                    IdCliente = p.IdCliente,
+                    MetodoPago = p.MetodoPago,
+                    Monto = p.Monto,
+                    Fecha = p.Fecha
+                }).ToList();
         }
 
     }

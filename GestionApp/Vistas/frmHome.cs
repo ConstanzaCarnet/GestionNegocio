@@ -1,3 +1,5 @@
+using GestionApp.Vistas;
+
 namespace GestionApp
 {
     public partial class frmHome : Form
@@ -69,6 +71,18 @@ namespace GestionApp
         private void verTodasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmVentas ventana = new frmVentas();
+            ventana.Show();
+        }
+
+        private void nuevaCategoríaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmNuevaCategoria ventana = new frmNuevaCategoria();
+            ventana.Show();
+        }
+
+        private void verCategoríasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

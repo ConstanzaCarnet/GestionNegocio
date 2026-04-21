@@ -20,8 +20,10 @@ namespace GestionApp.src.Services
             using var db = new AppDbContext();
 
             if (db.Clientes.Any(c => c.Email == dto.Email))
-                throw new Exception("El email ya está registrado");
-
+            {
+                MessageBox.Show("El email ya está registrado", "Inconveniente", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var cliente = new Cliente(
                 dto.Nombre,
                 dto.Apellido,
@@ -60,6 +62,39 @@ namespace GestionApp.src.Services
                     Saldo = c.Cuenta != null ? c.Cuenta.Saldo : 0
                 })
                 .ToList();
+        }
+        //obtener nombre para combobox
+        public string[] ObtenerNombresSugeridos()
+        {
+            using var db = new AppDbContext();
+            return db.Clientes
+                .AsNoTracking()
+                .Select(c => c.Nombre + " " + (c.Apellido ?? ""))
+                .ToArray();
+        }
+        //enn concecuencia buiscamos por nombre completo
+        public ClienteDto? ObtenerPorNombreCompleto(string nombreCompleto)
+        {
+            using var db = new AppDbContext();
+            // Buscamos el cliente cuyo nombre y apellido coincidan con el texto
+            var cliente = db.Clientes
+                .Include(c => c.Cuenta)
+                .AsNoTracking()
+                .ToList() // Traemos a memoria para comparar la concatenación fácilmente
+                .FirstOrDefault(c => (c.Nombre + " " + (c.Apellido ?? "")).Trim().ToLower() == nombreCompleto.Trim().ToLower());
+
+            if (cliente == null) return null;
+
+            return new ClienteDto
+            {
+                IdCliente = cliente.IdCliente,
+                Nombre = cliente.Nombre,
+                Apellido = cliente.Apellido,
+                Email = cliente.Email ?? "",
+                Telefono = cliente.Telefono,
+                Direccion = cliente.Direccion,
+                Saldo = cliente.Cuenta?.Saldo ?? 0
+            };
         }
 
         // Obtener por ID
@@ -127,6 +162,36 @@ namespace GestionApp.src.Services
                 })
                 .ToList();
         }
+        //Devolver los movimientos(tanto compra/venta como pago del cliente)
+        public List<MovimientoDto> ObtenerMoviminetos(int id)
+        {
+            using var db = new AppDbContext();
+            //Obtenemos ventas(compras a nivel real) del cliente
+            var ventas = db.Ventas
+                .Where(v => v.IdCliente == id)
+                .Select(v => new MovimientoDto
+                {
+                    IdMovimiento = v.IdVenta,
+                    Fecha = v.Fecha,
+                    Tipo = "Venta",
+                    Monto = v.MontoTotal,
+                    Detalle = "n° de Venta " + v.IdVenta
+                }).ToList();
+            var pagos = db.Pagos
+                .Where(c => c.IdCliente == id)
+                .Select(p => new MovimientoDto
+                {
+                    IdMovimiento = p.IdPago,
+                    Fecha = p.Fecha,
+                    Tipo = "Pago",
+                    Monto = p.Monto,
+                    Detalle = "n° de Recibo " + p.IdPago
+                }).ToList();
+            //devolvemos movimientos
+            return ventas.Concat(pagos).OrderByDescending(m => m.Fecha).ToList();
+            
+        }
+
 
         // Actualizar cliente
         public void Actualizar(ActualizarClienteDto dto)
@@ -150,7 +215,7 @@ namespace GestionApp.src.Services
 
             if (cliente == null) return;
 
-            cliente.Desactivar();
+            cliente.Desactivar();//no quiero borrar del registro al cliente
 
             db.SaveChanges();
         }

@@ -22,11 +22,11 @@ namespace GestionApp.src.Models
         private DetalleVenta() { }
 
         //método
-        public DetalleVenta(int idProducto, int cantidad, decimal precioUnitario)
+        public DetalleVenta(int idProducto, int cantidad, decimal precio)
         {
             IdProducto = idProducto;
             Cantidad = cantidad;
-            PrecioUnitario = precioUnitario;
+            PrecioUnitario = precio;
         }
         //método para aumentar cantidad
         public void AumentarCantidad(int cantidad)
