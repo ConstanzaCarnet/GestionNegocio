@@ -130,6 +130,7 @@
             Name = "frmCargarPago";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Cargar pago";
+            Load += frmCargarPago_Load;
             grpDatos.ResumeLayout(false);
             grpDatos.PerformLayout();
             ResumeLayout(false);

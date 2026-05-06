@@ -49,29 +49,31 @@ namespace GestionApp.src.Services
                     PrecioCompra =p.PrecioCompra,
                     PrecioVenta = p.PrecioVenta,
                     Stock = p.Stock,
-                    Categoria =p.Categoria != null ? p.Categoria.Nombre : ""
+                    Descripcion = p.Descripcion,
+                    Categoria = p.Categoria != null ? p.Categoria.Nombre : ""
                 })
                 .ToList();
         }
 
-        //buscar producto por Id
-        public ProductoDto BuscarPorId(int id)
+        //buscar producto por id
+        public ProductoDto? ObtenerPorId(int id)
         {
             using var db = new AppDbContext();
-            var producto =  db.Productos
-                            .AsNoTracking()
-                            .FirstOrDefault(p => p.IdProducto == id);
-            if (producto == null)
-                throw new Exception("No se encontró el producto");
-
-            return new ProductoDto
-            {
-                IdProducto = producto.IdProducto,
-                Nombre = producto.Nombre,
-                PrecioCompra = producto.PrecioCompra,
-                PrecioVenta = producto.PrecioVenta,
-                Stock = producto.Stock
-            };
+            return db.Productos
+                .Include(p => p.Categoria)
+                .AsNoTracking()
+                .Where(p => p.IdProducto == id)
+                .Select(p => new ProductoDto
+                {
+                    IdProducto = p.IdProducto,
+                    Nombre = p.Nombre,
+                    PrecioCompra = p.PrecioCompra,
+                    PrecioVenta = p.PrecioVenta,
+                    Stock = p.Stock,
+                    Descripcion = p.Descripcion,
+                    Categoria = p.Categoria != null ? p.Categoria.Nombre : "Sin Categoría"
+                })
+                .FirstOrDefault();
         }
         //Buscar por nombre
         public List<ProductoDto> BuscarProducto(string busqueda)
@@ -146,6 +148,13 @@ namespace GestionApp.src.Services
             }
             db.Remove(producto);
             db.SaveChanges();
+        }
+
+        //metodo para revisar si el producto ya existe, para evitar duplicados
+        public bool ExisteProducto(string nombre)
+        {
+            using var db = new AppDbContext();
+            return db.Productos.Any(p => p.Nombre.ToLower() == nombre.ToLower());
         }
 
     }

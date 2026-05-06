@@ -13,6 +13,7 @@ namespace GestionApp.src.DTOs.Response
         public decimal? PrecioCompra { get; set; }
         public decimal PrecioVenta { get; set; }
         public int Stock { get; set; }
+        public string? Descripcion { get; set; }
         public string? Categoria { get; set; }
     }
 }

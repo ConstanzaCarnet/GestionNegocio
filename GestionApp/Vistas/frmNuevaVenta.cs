@@ -219,7 +219,7 @@ namespace GestionApp
         private void ModificarCantidad(ItemVentaDto item, int cambio)
         {
             int nuevaCantidad = item.Cantidad + cambio;
-            var producto = _productoService.BuscarPorId(item.IdProducto);
+            var producto = _productoService.ObtenerPorId(item.IdProducto);
             // Validación de Stock (asumiendo que el DTO tiene el Stock máximo)
             if (nuevaCantidad > producto.Stock)
             {

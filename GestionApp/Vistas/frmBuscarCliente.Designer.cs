@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             grpDatos = new GroupBox();
             txtCliente = new TextBox();
             lblSaldo = new Label();
@@ -117,6 +118,7 @@
             // cmdCargarPago
             // 
             cmdCargarPago.BackColor = Color.Gainsboro;
+            cmdCargarPago.Enabled = false;
             cmdCargarPago.FlatStyle = FlatStyle.Popup;
             cmdCargarPago.Location = new Point(543, 640);
             cmdCargarPago.Name = "cmdCargarPago";
@@ -124,6 +126,7 @@
             cmdCargarPago.TabIndex = 36;
             cmdCargarPago.Text = "CARGAR PAGO";
             cmdCargarPago.UseVisualStyleBackColor = false;
+            cmdCargarPago.Click += cmdCargarPago_Click;
             // 
             // label7
             // 
@@ -161,6 +164,9 @@
             // Monto
             // 
             Monto.DataPropertyName = "Monto";
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = null;
+            Monto.DefaultCellStyle = dataGridViewCellStyle1;
             Monto.HeaderText = "Monto";
             Monto.Name = "Monto";
             Monto.Width = 150;
@@ -175,6 +181,7 @@
             // cmdGuardar
             // 
             cmdGuardar.BackColor = Color.Gainsboro;
+            cmdGuardar.Enabled = false;
             cmdGuardar.FlatStyle = FlatStyle.Popup;
             cmdGuardar.Location = new Point(25, 715);
             cmdGuardar.Name = "cmdGuardar";
@@ -182,10 +189,12 @@
             cmdGuardar.TabIndex = 33;
             cmdGuardar.Text = "GUARDAR";
             cmdGuardar.UseVisualStyleBackColor = false;
+            cmdGuardar.Click += cmdGuardar_Click;
             // 
             // cmdEliminar
             // 
             cmdEliminar.BackColor = Color.Gainsboro;
+            cmdEliminar.Enabled = false;
             cmdEliminar.FlatStyle = FlatStyle.Popup;
             cmdEliminar.Location = new Point(543, 715);
             cmdEliminar.Name = "cmdEliminar";
@@ -193,10 +202,12 @@
             cmdEliminar.TabIndex = 32;
             cmdEliminar.Text = "ELIMINAR";
             cmdEliminar.UseVisualStyleBackColor = false;
+            cmdEliminar.Click += cmdEliminar_Click;
             // 
             // cmdModificar
             // 
             cmdModificar.BackColor = Color.Gainsboro;
+            cmdModificar.Enabled = false;
             cmdModificar.FlatStyle = FlatStyle.Popup;
             cmdModificar.Location = new Point(288, 715);
             cmdModificar.Name = "cmdModificar";
@@ -204,6 +215,7 @@
             cmdModificar.TabIndex = 31;
             cmdModificar.Text = "MODIFICAR";
             cmdModificar.UseVisualStyleBackColor = false;
+            cmdModificar.Click += cmdModificar_Click;
             // 
             // cmdBuscar
             // 
@@ -228,6 +240,7 @@
             // 
             // txtDireccion
             // 
+            txtDireccion.Enabled = false;
             txtDireccion.Location = new Point(117, 297);
             txtDireccion.Multiline = true;
             txtDireccion.Name = "txtDireccion";
@@ -236,6 +249,7 @@
             // 
             // txtTelefono
             // 
+            txtTelefono.Enabled = false;
             txtTelefono.Location = new Point(438, 250);
             txtTelefono.Multiline = true;
             txtTelefono.Name = "txtTelefono";
@@ -244,6 +258,7 @@
             // 
             // txtEmail
             // 
+            txtEmail.Enabled = false;
             txtEmail.Location = new Point(105, 250);
             txtEmail.Multiline = true;
             txtEmail.Name = "txtEmail";
@@ -252,6 +267,7 @@
             // 
             // txtNombre
             // 
+            txtNombre.Enabled = false;
             txtNombre.Location = new Point(128, 210);
             txtNombre.Multiline = true;
             txtNombre.Name = "txtNombre";
@@ -260,6 +276,7 @@
             // 
             // txtApellido
             // 
+            txtApellido.Enabled = false;
             txtApellido.Location = new Point(431, 210);
             txtApellido.Multiline = true;
             txtApellido.Name = "txtApellido";
@@ -350,10 +367,10 @@
         private Button cmdCargarPago;
         private Label lblSaldo;
         private Label label8;
+        private TextBox txtCliente;
         private DataGridViewTextBoxColumn Fecha;
         private DataGridViewTextBoxColumn Tipo;
         private DataGridViewTextBoxColumn Monto;
         private DataGridViewTextBoxColumn Detalle;
-        private TextBox txtCliente;
     }
 }

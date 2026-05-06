@@ -25,5 +25,10 @@ namespace GestionApp
             dgvGrilla.AutoGenerateColumns = false;
             dgvGrilla.DataSource = data;
         }
+
+        private void grpDatos_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

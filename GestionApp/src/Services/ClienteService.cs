@@ -48,20 +48,20 @@ namespace GestionApp.src.Services
         {
             using var db = new AppDbContext();
 
-             return db.Clientes
-                .Include(c => c.Cuenta)//con esto incluimos los datos de la cuenta(Cuenta)
-                .AsNoTracking()
-                .Select(c => new ClienteDto
-                {
-                    IdCliente = c.IdCliente,
-                    Nombre = c.Nombre,
-                    Email = c.Email,
-                    Apellido = (c.Apellido ?? ""),
-                    Telefono = c.Telefono,
-                    Direccion = c.Direccion,
-                    Saldo = c.Cuenta != null ? c.Cuenta.Saldo : 0
-                })
-                .ToList();
+            return db.Clientes
+               .Include(c => c.Cuenta)//con esto incluimos los datos de la cuenta(Cuenta)
+               .AsNoTracking()
+               .Select(c => new ClienteDto
+               {
+                   IdCliente = c.IdCliente,
+                   Nombre = c.Nombre,
+                   Email = c.Email,
+                   Apellido = (c.Apellido ?? ""),
+                   Telefono = c.Telefono,
+                   Direccion = c.Direccion,
+                   Saldo = c.Cuenta != null ? c.Cuenta.Saldo : 0
+               })
+               .ToList();
         }
         //obtener nombre para combobox
         public string[] ObtenerNombresSugeridos()
@@ -168,6 +168,8 @@ namespace GestionApp.src.Services
             using var db = new AppDbContext();
             //Obtenemos ventas(compras a nivel real) del cliente
             var ventas = db.Ventas
+                //le digo que incluya el detalle de la venta para que me traiga el monto total
+                .Include(d => d.Detalles)
                 .Where(v => v.IdCliente == id)
                 .Select(v => new MovimientoDto
                 {
@@ -189,7 +191,7 @@ namespace GestionApp.src.Services
                 }).ToList();
             //devolvemos movimientos
             return ventas.Concat(pagos).OrderByDescending(m => m.Fecha).ToList();
-            
+
         }
 
 
@@ -219,5 +221,15 @@ namespace GestionApp.src.Services
 
             db.SaveChanges();
         }
+        //verificar si ya existe email
+        public bool EmailExiste(string email)
+        {
+            using var db = new AppDbContext();
+            return db.Clientes.Any(c => c.Email == email);
+        }
+
+
+
+
     }
 }

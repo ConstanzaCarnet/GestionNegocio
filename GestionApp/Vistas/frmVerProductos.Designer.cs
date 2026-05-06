@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             grpDatos = new GroupBox();
             dgvGrilla = new DataGridView();
             Nombre = new DataGridViewTextBoxColumn();
@@ -44,13 +45,15 @@
             grpDatos.Controls.Add(dgvGrilla);
             grpDatos.Location = new Point(12, 12);
             grpDatos.Name = "grpDatos";
-            grpDatos.Size = new Size(966, 577);
+            grpDatos.Size = new Size(1019, 577);
             grpDatos.TabIndex = 0;
             grpDatos.TabStop = false;
             grpDatos.Text = "Todos los productos";
+            grpDatos.Enter += grpDatos_Enter;
             // 
             // dgvGrilla
             // 
+            dgvGrilla.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvGrilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Nombre, Descripcion, PrecioCompra, PrecioVenta, Stock });
             dgvGrilla.Location = new Point(24, 36);
@@ -58,7 +61,7 @@
             dgvGrilla.ReadOnly = true;
             dgvGrilla.RowHeadersVisible = false;
             dgvGrilla.ScrollBars = ScrollBars.Vertical;
-            dgvGrilla.Size = new Size(917, 516);
+            dgvGrilla.Size = new Size(977, 516);
             dgvGrilla.TabIndex = 1;
             // 
             // Nombre
@@ -72,10 +75,12 @@
             // Descripcion
             // 
             Descripcion.DataPropertyName = "Descripcion";
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            Descripcion.DefaultCellStyle = dataGridViewCellStyle1;
             Descripcion.HeaderText = "Descripción";
             Descripcion.Name = "Descripcion";
             Descripcion.ReadOnly = true;
-            Descripcion.Width = 170;
+            Descripcion.Width = 300;
             // 
             // PrecioCompra
             // 
@@ -106,7 +111,7 @@
             AutoScaleDimensions = new SizeF(8F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LavenderBlush;
-            ClientSize = new Size(990, 603);
+            ClientSize = new Size(1043, 603);
             Controls.Add(grpDatos);
             Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(3, 4, 3, 4);

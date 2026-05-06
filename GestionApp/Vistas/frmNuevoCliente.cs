@@ -78,17 +78,22 @@ namespace GestionApp
         private void cmdAgregar_Click(object sender, EventArgs e)
         {
             var direccion = txtDireccion.Text;
-            //verificamos valores de email
-            if (!ValidarEmail(txtEmail.Text))
+            //verificamos valores de email, ya sea que es correcto o que existe ya en la base de datos
+            if (!ValidarEmail(txtEmail.Text) || servicio.EmailExiste(txtEmail.Text))
             {
                 MessageBox.Show("Verifica el email!");
                 txtEmail.Text = "";
                 return;
             }
-            if(direccion == "")
+            if(string.IsNullOrWhiteSpace(direccion)) direccion = "Sin dirección registrada";//le doy un valor por defecto en caso de que no se cargue direccion
+            //valido que el nombre no tenga numeros, ni esté con espacios, ni que exista
+            if (txtNombre.Text.Any(char.IsDigit) || string.IsNullOrWhiteSpace(txtNombre.Text) || servicio.NombreExiste(txtNombre.Text))
             {
-                direccion = "Sin dirección registrada";//le doy un valor por defecto en caso de que no se cargue direccion
+                MessageBox.Show("Verifica el nombre!");
+                txtNombre.Text = "";
+                return;
             }
+
             //instancio ClienteDto
             CrearClienteDto cliente = new CrearClienteDto();
             //tomo datos del formulario

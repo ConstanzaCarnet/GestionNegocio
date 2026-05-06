@@ -58,7 +58,7 @@ namespace GestionApp
 
         private void cargarPagoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmCargarPago ventanas = new frmCargarPago();
+            frmCargarPago ventanas = new frmCargarPago(0);
             ventanas.ShowDialog();
         }
 
@@ -82,7 +82,14 @@ namespace GestionApp
 
         private void verCategoríasToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            frmVerCategorías ventana = new frmVerCategorías();
+            ventana.Show();
+        }
 
+        private void envíoDeEmailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConfiguraciónEnvíoEmails ventana = new frmConfiguraciónEnvíoEmails();
+            ventana.Show();
         }
     }
 }

@@ -18,6 +18,7 @@ namespace GestionApp.src.Data
         public DbSet<DetalleVenta> DetallesVenta { get; set; }
         public DbSet<CuentaCorriente> CuentasCorrientes { get; set; }
         public DbSet<Pago> Pagos { get; set; }
+        public DbSet<ConfiguracionEmail> ConfiguracionEmails { get; set; }
 
         //configuracion de la conexion a la base de datos, en este caso se usa SQLite y se especifica la ruta del archivo de la base de datos
         //con esto evitamos tener que instanciar la conexion cada vez que queramos usar la base de datos,

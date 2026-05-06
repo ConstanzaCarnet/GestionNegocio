@@ -23,23 +23,18 @@ namespace GestionApp
         {
             CargarCategorias();
         }
-
+        //service
+        private ProductoService _productoService = new ProductoService();
+        private CategoríaService _categoriaService = new CategoríaService();
         //cargar categorias en combo
+
         private void CargarCategorias()
         {
-            using var db = new AppDbContext();
 
-            var categorias = db.Categorias
-                .Select(c => new
-                {
-                    c.IdCategoria,
-                    c.Nombre
-                })
-                .ToList();
-
-            cmbCategoria.DataSource = categorias;
+            cmbCategoria.DataSource = _categoriaService.Obtener();
             cmbCategoria.DisplayMember = "Nombre";
             cmbCategoria.ValueMember = "IdCategoria";
+            cmbCategoria.SelectedIndex = -1;
         }
         //verifico txts
         public void VerificarTxt()
@@ -99,28 +94,35 @@ namespace GestionApp
                     txtPCompra.Text = "";
                     return;
                 }
-                if (!int.TryParse(txtPVenta.Text, out _))
+                if (!int.TryParse(txtPVenta.Text, out _) || decimal.Parse(txtPVenta.Text) <= decimal.Parse(txtPCompra.Text))//reviso que el precio de venta sea decimal y mayor al precio de compra
                 {
                     MessageBox.Show("El precio de lista no es válido", "Error de entrada", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtPVenta.Text = "";
                     return;
                 }
-                if (cmbCategoria.SelectedValue == "")
+                //valido que se seleccione una categoría
+                if( cmbCategoria.SelectedIndex == -1)
                 {
                     MessageBox.Show("Debes elegir una categoría", "Dato incompleto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                var service = new ProductoService();
+                if (_productoService.ExisteProducto(txtNombre.Text))//valido que el producto nuevo no exista ya en la base de datos
+                {
+                    MessageBox.Show("El producto ya existe", "Error de entrada", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtNombre.Text = "";
+                    return;
+                }
                 var dto = new CrearProductoDto
                 {
                     Nombre = txtNombre.Text,
-                    Descripcion = txtDescripcion.Text,
+                    //si descripcion es vacío le doy valor de "Sin descripcion"
+                    Descripcion = string.IsNullOrWhiteSpace(txtDescripcion.Text) ? "Sin descripción" : txtDescripcion.Text,
                     PrecioCompra = decimal.Parse(txtPCompra.Text),
                     PrecioVenta = decimal.Parse(txtPVenta.Text),
                     Stock = int.Parse(txtStock.Text),
                     IdCategoria = (int)cmbCategoria.SelectedValue
                 };
-                service.CrearProducto(dto);
+                _productoService.CrearProducto(dto);
                 MessageBox.Show("Producto creado correctamente", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarTxt();
                 cmbCategoria.SelectedIndex = -1;
@@ -129,6 +131,11 @@ namespace GestionApp
             {
                 MessageBox.Show("Error al crear producto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void cmbCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

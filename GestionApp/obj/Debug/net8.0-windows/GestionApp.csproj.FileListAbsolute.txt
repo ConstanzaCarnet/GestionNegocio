@@ -135,3 +135,12 @@ E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.csproj.Up2Date
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.sourcelink.json
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.Vistas.frmNuevaCategoria.resources
+E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.Vistas.frmVerCategorías.resources
+E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\bin\Debug\net8.0-windows\MailKit.dll
+E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\bin\Debug\net8.0-windows\MimeKit.dll
+E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\bin\Debug\net8.0-windows\System.Security.Cryptography.Pkcs.dll
+E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.Vistas.frmAyuda.resources
+E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.Vistas.frmConfiguraciónEnvíoEmails.resources
+E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.Vistas.frmModificarCategoria.resources

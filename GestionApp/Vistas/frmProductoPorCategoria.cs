@@ -27,8 +27,7 @@ namespace GestionApp
         }
         private void CargarComboCategorias()
         {
-            var categorias = _categoriaService.ObtenerNombres();
-            cbmCategorias.DataSource = categorias;
+            cbmCategorias.DataSource = _categoriaService.Obtener();
             cbmCategorias.DisplayMember = "Nombre";
             cbmCategorias.ValueMember = "IdCategoria";
             cbmCategorias.SelectedIndex = -1;

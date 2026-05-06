@@ -89,6 +89,7 @@
             cmbCategoria.Name = "cmbCategoria";
             cmbCategoria.Size = new Size(224, 26);
             cmbCategoria.TabIndex = 13;
+            cmbCategoria.SelectedIndexChanged += cmbCategoria_SelectedIndexChanged;
             // 
             // txtPCompra
             // 

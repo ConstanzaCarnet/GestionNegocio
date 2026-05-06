@@ -73,6 +73,8 @@ public class  VentaService
         {
             IdVenta = v.IdVenta,
             Cliente = v.Cliente.Nombre + " " + v.Cliente.Apellido,
+            Email = v.Cliente.Email,
+            Telefono = v.Cliente.Telefono,
             Total = v.MontoTotal,
             Fecha = v.Fecha
         }).ToList();
@@ -99,6 +101,8 @@ public class  VentaService
         {
             IdVenta = v.IdVenta,
             Cliente = v.Cliente.Nombre + " " + v.Cliente.Apellido,
+            Email = v.Cliente.Email,
+            Telefono = v.Cliente.Telefono,
             Total = v.MontoTotal,
             Fecha = v.Fecha
         }).ToList();
@@ -117,5 +121,33 @@ public class  VentaService
                 PrecioUnitario = d.PrecioUnitario,
                 Subtotal = d.Cantidad * d.PrecioUnitario
             }).ToList();
+    }
+    //Mensaje
+    public string GenerarTicketTexto(VentaListDto venta, List<DetalleVentaDto> detalleVenta)
+    {
+        StringBuilder sb = new StringBuilder();
+        //construimos el mensaje
+        sb.AppendLine("************************************");
+        sb.AppendLine("         TIKET DE COMPRA            ");
+        sb.AppendLine("************************************");
+        sb.AppendLine($"Cliente: {venta.Cliente}");
+        sb.AppendLine($"Fecha:    {venta.Fecha: dd/MM/yyyy}");
+        sb.AppendLine("---------------------------------------------");
+        sb.AppendLine("Cantidad         Producto            Subtotal");
+        sb.AppendLine("---------------------------------------------");
+
+        foreach( var item in detalleVenta)
+        {
+            //usamos interpolacion con la alineacion
+            string nombreCorto = item.Producto.Length > 15 ? item.Producto.Substring(0, 15):item.Producto;
+            sb.AppendLine(string.Format("{0,-5}{1,-15}${2,8:N2}", item.Cantidad, nombreCorto, item.Subtotal));
+        }
+        sb.AppendLine("----------------------------------------------");
+        sb.AppendLine(string.Format("{0,21} ${1,8:N2}", "TOTAL: ", venta.Total));
+        sb.AppendLine("----------------------------------------------");
+        sb.AppendLine("          ¡Gracias por su compra!             ");
+
+        return sb.ToString();
+
     }
 }

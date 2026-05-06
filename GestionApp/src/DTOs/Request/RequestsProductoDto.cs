@@ -21,6 +21,7 @@ namespace GestionApp.src.DTOs.Request
         public string Nombre { get; set; }
         public string? Descripcion { get; set; }
         public decimal PrecioVenta { get; set; }
+        public decimal? PrecioCompra { get; set; }
         public int Stock { get; set; }//hay stock que puede vencerse(como las cremas o los labiales) por eso permito que el usuario poueda modificar el stock
         public int IdCategoria { get; set; }
     }

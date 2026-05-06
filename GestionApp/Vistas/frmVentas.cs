@@ -91,7 +91,7 @@ namespace GestionApp
             //finalmente muestro en grilla
             dgvGrilla.DataSource = null;//limpio grilla
             //valido si encontro algo
-            if(resultado == null || !resultado.Any())
+            if (resultado == null || !resultado.Any())
             {
                 MessageBox.Show("No se encontró ninguna venta", "Sin datos");
                 return;
@@ -99,5 +99,17 @@ namespace GestionApp
             dgvGrilla.DataSource = resultado;
         }
 
+        private void dgvGrilla_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dgvGrilla.Columns["cmdVerDetalle"].Index && e.RowIndex >= 0)
+            {
+                // Obtenemos el objeto VentaListDto de la fila actual
+                var ventaSeleccionada = (VentaListDto)dgvGrilla.Rows[e.RowIndex].DataBoundItem;
+
+                // Abrimos la ventana de detalle pasando el DTO
+                var frmDetalle = new frmDetalleVenta(ventaSeleccionada);
+                frmDetalle.ShowDialog();
+            }
+        }
     }
 }

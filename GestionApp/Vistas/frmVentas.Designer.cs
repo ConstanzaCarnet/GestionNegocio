@@ -28,6 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             groupBox1 = new GroupBox();
             dtpPeriodo = new DateTimePicker();
             cmdMostrar = new Button();
@@ -40,7 +45,7 @@
             Cliente = new DataGridViewTextBoxColumn();
             Monto = new DataGridViewTextBoxColumn();
             Fecha = new DataGridViewTextBoxColumn();
-            Detalle = new DataGridViewButtonColumn();
+            cmdVerDetalle = new DataGridViewButtonColumn();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvGrilla).BeginInit();
@@ -141,15 +146,34 @@
             // 
             // dgvGrilla
             // 
-            dgvGrilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Cliente, Monto, Fecha, Detalle });
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvGrilla.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvGrilla.ColumnHeadersHeight = 40;
+            dgvGrilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Cliente, Monto, Fecha, cmdVerDetalle });
             dgvGrilla.Location = new Point(41, 270);
             dgvGrilla.Name = "dgvGrilla";
             dgvGrilla.ReadOnly = true;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("Verdana", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvGrilla.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dgvGrilla.RowHeadersVisible = false;
+            dgvGrilla.RowHeadersWidth = 45;
             dgvGrilla.ScrollBars = ScrollBars.Vertical;
             dgvGrilla.Size = new Size(655, 467);
             dgvGrilla.TabIndex = 36;
+            dgvGrilla.CellContentClick += dgvGrilla_CellContentClick;
             // 
             // Cliente
             // 
@@ -162,6 +186,9 @@
             // Monto
             // 
             Monto.DataPropertyName = "Total";
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = null;
+            Monto.DefaultCellStyle = dataGridViewCellStyle2;
             Monto.HeaderText = "Monto";
             Monto.Name = "Monto";
             Monto.ReadOnly = true;
@@ -170,18 +197,25 @@
             // Fecha
             // 
             Fecha.DataPropertyName = "Fecha";
+            dataGridViewCellStyle3.Format = "d";
+            dataGridViewCellStyle3.NullValue = null;
+            Fecha.DefaultCellStyle = dataGridViewCellStyle3;
             Fecha.HeaderText = "Fecha";
             Fecha.Name = "Fecha";
             Fecha.ReadOnly = true;
             Fecha.Width = 170;
             // 
-            // Detalle
+            // cmdVerDetalle
             // 
-            Detalle.DataPropertyName = "cmdVerDetalle";
-            Detalle.HeaderText = "Detalle";
-            Detalle.Name = "Detalle";
-            Detalle.ReadOnly = true;
-            Detalle.UseColumnTextForButtonValue = true;
+            cmdVerDetalle.DataPropertyName = "cmdVerDetalle";
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = Color.White;
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(192, 255, 255);
+            cmdVerDetalle.DefaultCellStyle = dataGridViewCellStyle4;
+            cmdVerDetalle.HeaderText = "Detalle";
+            cmdVerDetalle.Name = "cmdVerDetalle";
+            cmdVerDetalle.ReadOnly = true;
+            cmdVerDetalle.UseColumnTextForButtonValue = true;
             // 
             // frmVentas
             // 
@@ -221,6 +255,6 @@
         private DataGridViewTextBoxColumn Cliente;
         private DataGridViewTextBoxColumn Monto;
         private DataGridViewTextBoxColumn Fecha;
-        private DataGridViewButtonColumn Detalle;
+        private DataGridViewButtonColumn cmdVerDetalle;
     }
 }

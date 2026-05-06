@@ -34,13 +34,18 @@ namespace GestionApp.Vistas
 
         private void cmdCrear_Click(object sender, EventArgs e)
         {
-            string descripcion = txtDescripcion.Text;
-            if (descripcion == null) descripcion = "Sin descripcion";
+            //realizo validaciones
+            string nombre = txtNombre.Text.Trim();
+            if (_categoriaService.ExisteNombre(nombre))
+            {
+                MessageBox.Show("Ya existe una categoría con ese nombre", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             //instancio categoriadto
             var categoria = new CategoriaDto
             {
                 Nombre = txtNombre.Text,
-                Descripcion = txtDescripcion.Text
+                Descripcion = string.IsNullOrWhiteSpace(txtDescripcion.Text) ? "Sin descripción" : txtDescripcion.Text
             };
             //llamo la funcion del servicio
             _categoriaService.Crear(categoria);

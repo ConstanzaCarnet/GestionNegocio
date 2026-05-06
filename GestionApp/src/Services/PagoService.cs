@@ -86,5 +86,11 @@ namespace GestionApp.src.Services
                 }).ToList();
         }
 
+        //obtener metodos de pago, lo hacemos aquí mismo porque es un enum y no una tabla en la base de datos, así evitamos crear un service innecesario para esto
+        public List<string> ObtenerMetodosPago()
+        {
+            return Enum.GetNames(typeof(MetodoPago)).ToList();
+        }
+
     }
 }
