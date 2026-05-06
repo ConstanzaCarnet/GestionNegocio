@@ -87,7 +87,7 @@ namespace GestionApp
             }
             if(string.IsNullOrWhiteSpace(direccion)) direccion = "Sin dirección registrada";//le doy un valor por defecto en caso de que no se cargue direccion
             //valido que el nombre no tenga numeros, ni esté con espacios, ni que exista
-            if (txtNombre.Text.Any(char.IsDigit) || string.IsNullOrWhiteSpace(txtNombre.Text) || servicio.NombreExiste(txtNombre.Text))
+            if (txtNombre.Text.Any(char.IsDigit) || string.IsNullOrWhiteSpace(txtNombre.Text) || servicio.ObtenerPorNombreCompleto(txtNombre.Text + " " + txtApellido.Text) != null)
             {
                 MessageBox.Show("Verifica el nombre!");
                 txtNombre.Text = "";
