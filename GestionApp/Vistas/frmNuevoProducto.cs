@@ -22,12 +22,18 @@ namespace GestionApp
         private void frmNuevoProducto_Load(object sender, EventArgs e)
         {
             CargarCategorias();
+            dgvGrilla.AutoGenerateColumns = false;
+            MostrarProductos();
         }
         //service
         private ProductoService _productoService = new ProductoService();
         private CategoríaService _categoriaService = new CategoríaService();
         //cargar categorias en combo
-
+        private void MostrarProductos()
+        {
+            var data = _productoService.ObtenerTodos();
+            dgvGrilla.DataSource = data;
+        }
         private void CargarCategorias()
         {
 
@@ -101,7 +107,7 @@ namespace GestionApp
                     return;
                 }
                 //valido que se seleccione una categoría
-                if( cmbCategoria.SelectedIndex == -1)
+                if (cmbCategoria.SelectedIndex == -1)
                 {
                     MessageBox.Show("Debes elegir una categoría", "Dato incompleto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -126,6 +132,7 @@ namespace GestionApp
                 MessageBox.Show("Producto creado correctamente", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarTxt();
                 cmbCategoria.SelectedIndex = -1;
+                MostrarProductos();
             }
             catch (Exception ex)
             {
@@ -134,6 +141,11 @@ namespace GestionApp
         }
 
         private void cmbCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvGrilla_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

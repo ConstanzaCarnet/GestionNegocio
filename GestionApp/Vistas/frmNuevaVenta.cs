@@ -215,7 +215,7 @@ namespace GestionApp
                     break;
             }
         }
-        
+
         private void ModificarCantidad(ItemVentaDto item, int cambio)
         {
             int nuevaCantidad = item.Cantidad + cambio;
@@ -250,6 +250,14 @@ namespace GestionApp
         {
             RefrescarGrilla();
             ActualizarTotal();
+        }
+
+        private void grpCargaProductos_Enter(object sender, EventArgs e)
+        {
+            if(cmdAgregar.Enabled == false)
+            {
+                MessageBox.Show("Seleccione un cliente para agregar productos");
+            }
         }
     }
 }

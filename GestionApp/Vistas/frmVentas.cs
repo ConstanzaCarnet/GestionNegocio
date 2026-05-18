@@ -101,6 +101,7 @@ namespace GestionApp
 
         private void dgvGrilla_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.ColumnIndex < 0 || e.RowIndex < 0) return;
             if (e.ColumnIndex == dgvGrilla.Columns["cmdVerDetalle"].Index && e.RowIndex >= 0)
             {
                 // Obtenemos el objeto VentaListDto de la fila actual
@@ -109,6 +110,25 @@ namespace GestionApp
                 // Abrimos la ventana de detalle pasando el DTO
                 var frmDetalle = new frmDetalleVenta(ventaSeleccionada);
                 frmDetalle.ShowDialog();
+            }
+            //si es el boton eliminar
+            if (e.ColumnIndex == dgvGrilla.Columns["cmdEliminar"].Index && e.RowIndex >= 0)
+            {
+                var ventaSeleccionada = (VentaListDto)dgvGrilla.Rows[e.RowIndex].DataBoundItem;
+                var confirmResult = MessageBox.Show("¿Estás seguro de eliminar esta venta?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    bool eliminado = _ventaService.EliminarVenta(ventaSeleccionada.IdVenta);
+                    if (eliminado)
+                    {
+                        MessageBox.Show("Venta eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        cmdMostrar.PerformClick(); // Refrescar la grilla
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo eliminar la venta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
     }

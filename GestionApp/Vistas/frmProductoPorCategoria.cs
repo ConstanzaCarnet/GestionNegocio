@@ -1,4 +1,6 @@
-﻿using GestionApp.src.Services;
+﻿using GestionApp.src.DTOs.Response;
+using GestionApp.src.Models;
+using GestionApp.src.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,9 +29,17 @@ namespace GestionApp
         }
         private void CargarComboCategorias()
         {
-            cbmCategorias.DataSource = _categoriaService.Obtener();
+            // 1. Obtenemos la lista desde el servicio
+            var listaCategorias = _categoriaService.Obtener().ToList();
+            // 2. Creamos el ítem "Ver Todos" con un Id que represente "ninguno" o "todos" (ej: 0 o -1)
+            var itemTodos = new Categoria { IdCategoria = 0, Nombre = "Ver todos" };
+            // 3. Lo insertamos al principio de la lista (índice 0)
+            listaCategorias.Insert(0, itemTodos);
+            // 4. Asignamos la lista modificada al ComboBox
+            cbmCategorias.DataSource = listaCategorias;
             cbmCategorias.DisplayMember = "Nombre";
             cbmCategorias.ValueMember = "IdCategoria";
+            // 5. No muestra nada por defecto
             cbmCategorias.SelectedIndex = -1;
         }
 
@@ -43,7 +53,15 @@ namespace GestionApp
         }
         public void ActualizarGrilla(int idCate)
         {
-            var productos = _productoService.BuscarPorCategoria(idCate);
+            List<ProductoDto> productos;
+            if (idCate == 0)
+            {
+                productos = _productoService.ObtenerTodos();
+            }
+            else
+            {
+                productos = _productoService.BuscarPorCategoria(idCate);
+            }
             //limpio grilla
             dgvGrilla.DataSource = null;
             //relleno la grilla con los datos

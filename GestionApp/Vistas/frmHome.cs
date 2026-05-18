@@ -20,12 +20,6 @@ namespace GestionApp
             vetana.ShowDialog();
         }
 
-        private void verTodosToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmVerProductos ventana = new frmVerProductos();
-            ventana.ShowDialog();
-        }
-
         private void buscarProductoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmBuscarProducto ventana = new frmBuscarProducto();
@@ -42,12 +36,6 @@ namespace GestionApp
         {
             frmNuevoCliente ventana = new frmNuevoCliente();
             ventana.ShowDialog();
-        }
-
-        private void comprasDeUnClienteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmVerClientes ventanas = new frmVerClientes();
-            ventanas.ShowDialog();
         }
 
         private void filtrarClienteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -73,23 +61,28 @@ namespace GestionApp
             frmVentas ventana = new frmVentas();
             ventana.Show();
         }
-
-        private void nuevaCategoríaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmNuevaCategoria ventana = new frmNuevaCategoria();
-            ventana.Show();
-        }
-
-        private void verCategoríasToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmVerCategorías ventana = new frmVerCategorías();
-            ventana.Show();
-        }
-
         private void envíoDeEmailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmConfiguraciónEnvíoEmails ventana = new frmConfiguraciónEnvíoEmails();
             ventana.Show();
+        }
+
+        private void acercaDeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAcercaDe ventana = new frmAcercaDe();
+            ventana.ShowDialog();
+        }
+
+        private void catálogosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCatalogos ventana = new frmCatalogos();
+            ventana.ShowDialog();
+        }
+
+        private void categoríasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmVerCategorías ventana = new frmVerCategorías();
+            ventana.ShowDialog();
         }
     }
 }

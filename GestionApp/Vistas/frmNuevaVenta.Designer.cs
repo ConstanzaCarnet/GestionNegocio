@@ -46,9 +46,6 @@
             label4 = new Label();
             cmdAgregar = new Button();
             dgvGrilla = new DataGridView();
-            cmbProductos = new ComboBox();
-            lblTotal = new Label();
-            label3 = new Label();
             Nombre = new DataGridViewTextBoxColumn();
             PrecioUnitario = new DataGridViewTextBoxColumn();
             Cantidad = new DataGridViewTextBoxColumn();
@@ -56,6 +53,9 @@
             cmdAumentar = new DataGridViewButtonColumn();
             cmdDisminuir = new DataGridViewButtonColumn();
             cmdQuitar = new DataGridViewButtonColumn();
+            cmbProductos = new ComboBox();
+            lblTotal = new Label();
+            label3 = new Label();
             grpDatos.SuspendLayout();
             grpCargaProductos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvGrilla).BeginInit();
@@ -158,6 +158,7 @@
             grpCargaProductos.TabIndex = 35;
             grpCargaProductos.TabStop = false;
             grpCargaProductos.Text = "Datos de la venta";
+            grpCargaProductos.Enter += grpCargaProductos_Enter;
             // 
             // cmbCantidad
             // 
@@ -233,32 +234,6 @@
             dgvGrilla.Size = new Size(820, 246);
             dgvGrilla.TabIndex = 0;
             dgvGrilla.CellContentClick += dgvGrilla_CellContentClick;
-            // 
-            // cmbProductos
-            // 
-            cmbProductos.FormattingEnabled = true;
-            cmbProductos.Location = new Point(130, 27);
-            cmbProductos.Name = "cmbProductos";
-            cmbProductos.Size = new Size(368, 26);
-            cmbProductos.TabIndex = 45;
-            cmbProductos.SelectedIndexChanged += cmbProductos_SelectedIndexChanged;
-            // 
-            // lblTotal
-            // 
-            lblTotal.BorderStyle = BorderStyle.Fixed3D;
-            lblTotal.FlatStyle = FlatStyle.Popup;
-            lblTotal.Location = new Point(651, 398);
-            lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(185, 28);
-            lblTotal.TabIndex = 30;
-            // 
-            // label3
-            // 
-            label3.Location = new Point(30, 30);
-            label3.Name = "label3";
-            label3.Size = new Size(94, 22);
-            label3.TabIndex = 44;
-            label3.Text = "Producto:";
             // 
             // Nombre
             // 
@@ -338,6 +313,32 @@
             cmdQuitar.Text = "X";
             cmdQuitar.UseColumnTextForButtonValue = true;
             cmdQuitar.Width = 40;
+            // 
+            // cmbProductos
+            // 
+            cmbProductos.FormattingEnabled = true;
+            cmbProductos.Location = new Point(130, 27);
+            cmbProductos.Name = "cmbProductos";
+            cmbProductos.Size = new Size(368, 26);
+            cmbProductos.TabIndex = 45;
+            cmbProductos.SelectedIndexChanged += cmbProductos_SelectedIndexChanged;
+            // 
+            // lblTotal
+            // 
+            lblTotal.BorderStyle = BorderStyle.Fixed3D;
+            lblTotal.FlatStyle = FlatStyle.Popup;
+            lblTotal.Location = new Point(651, 398);
+            lblTotal.Name = "lblTotal";
+            lblTotal.Size = new Size(185, 28);
+            lblTotal.TabIndex = 30;
+            // 
+            // label3
+            // 
+            label3.Location = new Point(30, 30);
+            label3.Name = "label3";
+            label3.Size = new Size(94, 22);
+            label3.TabIndex = 44;
+            label3.Text = "Producto:";
             // 
             // frmNuevaVenta
             // 

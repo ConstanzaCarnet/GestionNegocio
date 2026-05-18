@@ -18,9 +18,15 @@ namespace GestionApp
         public frmNuevoCliente()
         {
             InitializeComponent();
+            dgvGrilla.AutoGenerateColumns = false;
+
         }
         //instancio servicio
         ClienteService servicio = new ClienteService();
+        private void frmNuevoCliente_Load(object sender, EventArgs e)
+        {
+            dgvGrilla.DataSource = servicio.ObtenerTodos();
+        }
 
         //verifico datos de txt 
         public void txtVerificar()
@@ -85,7 +91,7 @@ namespace GestionApp
                 txtEmail.Text = "";
                 return;
             }
-            if(string.IsNullOrWhiteSpace(direccion)) direccion = "Sin dirección registrada";//le doy un valor por defecto en caso de que no se cargue direccion
+            if (string.IsNullOrWhiteSpace(direccion)) direccion = "Sin dirección registrada";//le doy un valor por defecto en caso de que no se cargue direccion
             //valido que el nombre no tenga numeros, ni esté con espacios, ni que exista
             if (txtNombre.Text.Any(char.IsDigit) || string.IsNullOrWhiteSpace(txtNombre.Text) || servicio.ObtenerPorNombreCompleto(txtNombre.Text + " " + txtApellido.Text) != null)
             {
@@ -106,6 +112,16 @@ namespace GestionApp
             servicio.CrearCliente(cliente);
             MessageBox.Show("Cliente creado con éxito!");
             Limpiar();
+        }
+
+        private void cmdTodos_Click(object sender, EventArgs e)
+        {
+            dgvGrilla.DataSource = servicio.ObtenerTodos();
+        }
+
+        private void cmdDeudores_Click(object sender, EventArgs e)
+        {
+            dgvGrilla.DataSource = servicio.ObtenerDeudores();
         }
     }
 }

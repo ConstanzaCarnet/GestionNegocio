@@ -12,7 +12,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GestionApp.src.Services;
 
-public class  VentaService
+public class VentaService
 {
     public void CrearVenta(CrearVentaDto dto)
     {
@@ -20,7 +20,7 @@ public class  VentaService
         //buscamos y validamos el cliente
         var cliente = db.Clientes.FirstOrDefault(c => c.IdCliente == dto.IdCliente);
         if (cliente == null) throw new Exception("Cliente no encontrado");
-        
+
         // Validación de ítems
         if (dto.Items == null || !dto.Items.Any())
             throw new Exception("La venta debe tener al menos un producto");
@@ -84,7 +84,7 @@ public class  VentaService
     {
         using var db = new AppDbContext();
         var ventas = db.Ventas
-            .Include(v=>v.Cliente)
+            .Include(v => v.Cliente)
             .Include(v => v.Detalles)
             .ThenInclude(v => v.Producto)
             .AsQueryable();
@@ -94,7 +94,7 @@ public class  VentaService
             ventas = ventas.Where(v => v.IdCliente == id);
         else if (filtro == "Producto")
             ventas = ventas.Where(v => v.Detalles.Any(d => d.IdProducto == id));
-        else if(filtro == "Mes" && anio.HasValue)
+        else if (filtro == "Mes" && anio.HasValue)
             ventas = ventas.Where(v => v.Fecha.Month == id && v.Fecha.Year == anio.Value);
         //devuelvo ya filtrado
         return ventas.Select(v => new VentaListDto
@@ -136,10 +136,10 @@ public class  VentaService
         sb.AppendLine("Cantidad         Producto            Subtotal");
         sb.AppendLine("---------------------------------------------");
 
-        foreach( var item in detalleVenta)
+        foreach (var item in detalleVenta)
         {
             //usamos interpolacion con la alineacion
-            string nombreCorto = item.Producto.Length > 15 ? item.Producto.Substring(0, 15):item.Producto;
+            string nombreCorto = item.Producto.Length > 15 ? item.Producto.Substring(0, 15) : item.Producto;
             sb.AppendLine(string.Format("{0,-5}{1,-15}${2,8:N2}", item.Cantidad, nombreCorto, item.Subtotal));
         }
         sb.AppendLine("----------------------------------------------");
@@ -149,5 +149,54 @@ public class  VentaService
 
         return sb.ToString();
 
+    }
+    //modificar venta---> en sí por el momento, la venta se crea y si no se elimina, o se agrega otra venta. Para simplificar el manejo
+    //por eso el metodo modificar venta aun no se implementa en la interfaz
+    public void ModificarVenta(int idVenta, CrearVentaDto dto)
+    {
+        using var db = new AppDbContext();
+        var venta = db.Ventas
+            .Include(v => v.Detalles)
+            .FirstOrDefault(v => v.IdVenta == idVenta);
+        if (venta == null) throw new Exception("Venta no encontrada");
+        // Eliminar detalles anteriores
+        db.DetallesVenta.RemoveRange(venta.Detalles);
+        // Agregar nuevos detalles
+        foreach (var item in dto.Items)
+        {
+            var detalle = new CrearDetalleDto
+            {
+                IdProducto = item.IdProducto,
+                Cantidad = item.Cantidad
+            };
+            venta.AgregarProducto(db.Productos.Find(item.IdProducto), item.Cantidad);
+        }
+        db.SaveChanges();
+    }
+    //Eliminar venta
+    public bool EliminarVenta(int idVenta)
+    {
+        //se elimina venta y detalles asociados, y se actualiza el stock de los productos
+        using var db = new AppDbContext();
+        var venta = db.Ventas
+            .Include(v => v.Detalles)
+            .FirstOrDefault(v => v.IdVenta == idVenta);
+        //cuenta del cliente para actualizarla luego de eliminar la venta
+        var cuenta = db.CuentasCorrientes.FirstOrDefault(c => c.IdCliente == venta.IdCliente);
+        //validamos
+        if(cuenta == null) throw new Exception("El cliente no tiene una cuenta corriente asociada");
+        if (venta == null) return false;
+        //antes de eliminar la venta, actualizamos el stock de los productos
+        foreach (var detalle in venta.Detalles)
+        {
+            var producto = db.Productos.Find(detalle.IdProducto);
+            producto.AgregarStock(detalle.Cantidad);//"devolvemos" el producto
+        }
+        //ademas hacemos un "pago" en la cuenta del cliente, para que la venta quede revertida tambien en la cuenta
+        cuenta.AplicarPago(venta.MontoTotal);
+        db.DetallesVenta.RemoveRange(venta.Detalles);
+        db.Ventas.Remove(venta);
+        db.SaveChanges();
+        return true;
     }
 }

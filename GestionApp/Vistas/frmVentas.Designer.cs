@@ -46,6 +46,7 @@
             Monto = new DataGridViewTextBoxColumn();
             Fecha = new DataGridViewTextBoxColumn();
             cmdVerDetalle = new DataGridViewButtonColumn();
+            cmdEliminar = new DataGridViewButtonColumn();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvGrilla).BeginInit();
@@ -60,7 +61,7 @@
             groupBox1.Controls.Add(dgvGrilla);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(740, 743);
+            groupBox1.Size = new Size(790, 743);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Datos registrados";
@@ -69,7 +70,7 @@
             // 
             dtpPeriodo.CustomFormat = "MMMM yyyy";
             dtpPeriodo.Format = DateTimePickerFormat.Custom;
-            dtpPeriodo.Location = new Point(89, 216);
+            dtpPeriodo.Location = new Point(102, 191);
             dtpPeriodo.Name = "dtpPeriodo";
             dtpPeriodo.ShowUpDown = true;
             dtpPeriodo.Size = new Size(348, 26);
@@ -80,7 +81,7 @@
             cmdMostrar.BackColor = Color.Gainsboro;
             cmdMostrar.FlatStyle = FlatStyle.Popup;
             cmdMostrar.Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmdMostrar.Location = new Point(510, 173);
+            cmdMostrar.Location = new Point(511, 191);
             cmdMostrar.Name = "cmdMostrar";
             cmdMostrar.Size = new Size(141, 26);
             cmdMostrar.TabIndex = 43;
@@ -93,7 +94,7 @@
             groupBox2.Controls.Add(rdbCliente);
             groupBox2.Controls.Add(rdbMes);
             groupBox2.Controls.Add(rdbProducto);
-            groupBox2.Location = new Point(41, 37);
+            groupBox2.Location = new Point(54, 37);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(655, 93);
             groupBox2.TabIndex = 42;
@@ -139,7 +140,7 @@
             // cmbOpciones
             // 
             cmbOpciones.FormattingEnabled = true;
-            cmbOpciones.Location = new Point(89, 174);
+            cmbOpciones.Location = new Point(102, 159);
             cmbOpciones.Name = "cmbOpciones";
             cmbOpciones.Size = new Size(348, 26);
             cmbOpciones.TabIndex = 41;
@@ -156,8 +157,8 @@
             dgvGrilla.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvGrilla.ColumnHeadersHeight = 40;
             dgvGrilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Cliente, Monto, Fecha, cmdVerDetalle });
-            dgvGrilla.Location = new Point(41, 270);
+            dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Cliente, Monto, Fecha, cmdVerDetalle, cmdEliminar });
+            dgvGrilla.Location = new Point(22, 257);
             dgvGrilla.Name = "dgvGrilla";
             dgvGrilla.ReadOnly = true;
             dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -171,7 +172,7 @@
             dgvGrilla.RowHeadersVisible = false;
             dgvGrilla.RowHeadersWidth = 45;
             dgvGrilla.ScrollBars = ScrollBars.Vertical;
-            dgvGrilla.Size = new Size(655, 467);
+            dgvGrilla.Size = new Size(746, 467);
             dgvGrilla.TabIndex = 36;
             dgvGrilla.CellContentClick += dgvGrilla_CellContentClick;
             // 
@@ -217,12 +218,20 @@
             cmdVerDetalle.ReadOnly = true;
             cmdVerDetalle.UseColumnTextForButtonValue = true;
             // 
+            // cmdEliminar
+            // 
+            cmdEliminar.DataPropertyName = "cmdEliminar";
+            cmdEliminar.HeaderText = "Eliminar";
+            cmdEliminar.Name = "cmdEliminar";
+            cmdEliminar.ReadOnly = true;
+            cmdEliminar.UseColumnTextForButtonValue = true;
+            // 
             // frmVentas
             // 
             AutoScaleDimensions = new SizeF(8F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LavenderBlush;
-            ClientSize = new Size(767, 767);
+            ClientSize = new Size(812, 767);
             Controls.Add(groupBox1);
             Font = new Font("Tahoma", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(3, 4, 3, 4);
@@ -256,5 +265,6 @@
         private DataGridViewTextBoxColumn Monto;
         private DataGridViewTextBoxColumn Fecha;
         private DataGridViewButtonColumn cmdVerDetalle;
+        private DataGridViewButtonColumn cmdEliminar;
     }
 }
