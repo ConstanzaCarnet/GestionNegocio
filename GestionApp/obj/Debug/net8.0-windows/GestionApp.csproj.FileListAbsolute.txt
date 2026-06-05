@@ -213,3 +213,4 @@ E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\bin\Debug\net8.0-windows\
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\bin\Debug\net8.0-windows\runtimes\win-x86\native\libwinpthread-1.dll
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\bin\Debug\net8.0-windows\runtimes\win-x86\native\qpdf.dll
 E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\bin\Debug\net8.0-windows\runtimes\win-x86\native\zlib1.dll
+E:\Proyects\C#\ProfesionalizateI\GestionApp\GestionApp\obj\Debug\net8.0-windows\GestionApp.FormBase.resources

@@ -23,6 +23,8 @@ namespace GestionApp
             IconosUI.AplicarIconoBoton(cmdAgregar, IconosUI.Agregar);
             IconosUI.AplicarIconoBoton(cmdTodos, IconosUI.Lista);
             IconosUI.AplicarIconoBoton(cmdDeudores, IconosUI.Personas);
+            //autocompletado de direcciones con la API Georef (gratuita, sin key)
+            ExternalServices.HabilitarAutocompletadoDireccion(txtDireccion);
         }
         //instancio servicio
         ClienteService servicio = new ClienteService();

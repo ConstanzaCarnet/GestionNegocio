@@ -37,6 +37,9 @@
     <Compile Update="Vistas\frmHome.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Vistas\frmMapa.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Vistas\frmModificarCategoria.cs">
       <SubType>Form</SubType>
     </Compile>

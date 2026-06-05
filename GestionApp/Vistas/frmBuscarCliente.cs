@@ -23,12 +23,62 @@ namespace GestionApp
             IconosUI.AplicarIconoBoton(cmdGuardar, IconosUI.Guardar);
             IconosUI.AplicarIconoBoton(cmdEliminar, IconosUI.Eliminar);
             IconosUI.AplicarIconoBoton(cmdCargarPago, IconosUI.Pago);
+            //autocompletado de dirección (cuando se modifica) + link para ver el mapa
+            ExternalServices.HabilitarAutocompletadoDireccion(txtDireccion);
+            ConfigurarLinkDireccion();
         }
         //instancio servicios
         private ClienteService _clienteService = new ClienteService();
         private CuentaCorrienteServices _cuentaCorrienteServices = new CuentaCorrienteServices();
         //instancio variable para que guarde el id del cliente seleccionado y poder usarlo para cargar los movimientos y cargar el pago
         private int idClienteSeleccionado = 0;
+
+        //--- Link "Mostrar dirección": ubica al cliente en un mapa (Georef + OpenStreetMap) ---
+        private LinkLabel lnkMapa;
+
+        //Crea por código el link debajo del campo Dirección.
+        private void ConfigurarLinkDireccion()
+        {
+            lnkMapa = new LinkLabel
+            {
+                Text = "Mostrar dirección",
+                AutoSize = true,
+                Location = new Point(117, 324)
+            };
+            lnkMapa.LinkClicked += MostrarDireccion_Click;
+            grpDatos.Controls.Add(lnkMapa);
+        }
+
+        //Geocodifica la dirección escrita y, si la encuentra, abre el mapa en una
+        //ventana flotante; si no, avisa con un MessageBox.
+        private async void MostrarDireccion_Click(object sender, EventArgs e)
+        {
+            string direccion = txtDireccion.Text;
+            if (string.IsNullOrWhiteSpace(direccion))
+            {
+                MessageBox.Show("Primero busque un cliente con dirección cargada.", "Mapa",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            //feedback mientras consulta la API
+            lnkMapa.Enabled = false;
+            lnkMapa.Text = "Buscando ubicación...";
+            var geo = await ExternalServices.GeocodificarAsync(direccion);
+            lnkMapa.Text = "Mostrar dirección";
+            lnkMapa.Enabled = true;
+
+            if (geo == null)
+            {
+                MessageBox.Show("No se pudo ubicar la dirección en el mapa.", "Mapa",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            //abro el mapa como ventana flotante asociada a esta (se cierra junto con ella)
+            new frmMapa(geo).Show(this);
+        }
+
         private void frmBuscarCliente_Load(object sender, EventArgs e)
         {
             dgvGrilla.AutoGenerateColumns = false;

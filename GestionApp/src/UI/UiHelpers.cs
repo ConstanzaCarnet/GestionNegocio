@@ -25,8 +25,7 @@ namespace GestionApp
             }
             catch
             {
-                // Si por algún motivo no se pudo cargar el icono, la ventana
-                // simplemente usa el icono por defecto en vez de fallar.
+                // Si por algún motivo no se pudo cargar el icono, la ventana simplemente usa el icono por defecto en vez de fallar.
             }
         }
     }
