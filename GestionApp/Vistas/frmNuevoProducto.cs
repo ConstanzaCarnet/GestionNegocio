@@ -13,11 +13,13 @@ using System.Windows.Forms;
 
 namespace GestionApp
 {
-    public partial class frmNuevoProducto : Form
+    public partial class frmNuevoProducto : FormBase
     {
         public frmNuevoProducto()
         {
             InitializeComponent();
+            //icono en el botón de acción
+            IconosUI.AplicarIconoBoton(cmdAgregar, IconosUI.Agregar);
         }
         private void frmNuevoProducto_Load(object sender, EventArgs e)
         {

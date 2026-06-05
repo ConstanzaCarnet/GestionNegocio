@@ -12,11 +12,17 @@ using System.Windows.Forms;
 
 namespace GestionApp
 {
-    public partial class frmBuscarCliente : Form
+    public partial class frmBuscarCliente : FormBase
     {
         public frmBuscarCliente()
         {
             InitializeComponent();
+            //iconos en los botones de acción
+            IconosUI.AplicarIconoBoton(cmdBuscar, IconosUI.Buscar);
+            IconosUI.AplicarIconoBoton(cmdModificar, IconosUI.Editar);
+            IconosUI.AplicarIconoBoton(cmdGuardar, IconosUI.Guardar);
+            IconosUI.AplicarIconoBoton(cmdEliminar, IconosUI.Eliminar);
+            IconosUI.AplicarIconoBoton(cmdCargarPago, IconosUI.Pago);
         }
         //instancio servicios
         private ClienteService _clienteService = new ClienteService();

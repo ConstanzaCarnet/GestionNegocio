@@ -13,13 +13,16 @@ using System.Windows.Forms;
 
 namespace GestionApp
 {
-    public partial class frmNuevoCliente : Form
+    public partial class frmNuevoCliente : FormBase
     {
         public frmNuevoCliente()
         {
             InitializeComponent();
             dgvGrilla.AutoGenerateColumns = false;
-
+            //iconos en los botones de acción
+            IconosUI.AplicarIconoBoton(cmdAgregar, IconosUI.Agregar);
+            IconosUI.AplicarIconoBoton(cmdTodos, IconosUI.Lista);
+            IconosUI.AplicarIconoBoton(cmdDeudores, IconosUI.Personas);
         }
         //instancio servicio
         ClienteService servicio = new ClienteService();

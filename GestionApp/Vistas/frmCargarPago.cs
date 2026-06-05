@@ -12,11 +12,13 @@ using System.Windows.Forms;
 
 namespace GestionApp
 {
-    public partial class frmCargarPago : Form
+    public partial class frmCargarPago : FormBase
     {
         public frmCargarPago(int idCliente)
         {
             InitializeComponent();
+            //icono en el botón de acción
+            IconosUI.AplicarIconoBoton(cmdCargar, IconosUI.Pago);
             //valido que el idCliente sea mayor a 0, si es 0 es porque se llama desde el menú, si no es porque se llama desde el formulario de cliente para cargar un pago directo
             if (idCliente > 0)
             {

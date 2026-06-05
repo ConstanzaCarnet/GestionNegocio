@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace GestionApp
 {
-    public partial class frmNuevaVenta : Form
+    public partial class frmNuevaVenta : FormBase
     {
         //lista de items
         private List<ItemVentaDto> _items = new();
@@ -29,6 +29,16 @@ namespace GestionApp
         public frmNuevaVenta()
         {
             InitializeComponent();
+            //iconos en las columnas de acción de la grilla
+            IconosUI.AplicarIcono(cmdAumentar, IconosUI.Agregar, "Aumentar cantidad");
+            IconosUI.AplicarIcono(cmdDisminuir, IconosUI.Quitar, "Disminuir cantidad");
+            IconosUI.AplicarIcono(cmdQuitar, IconosUI.Eliminar, "Quitar producto");
+            //iconos en los botones de acción
+            IconosUI.AplicarIconoBoton(cmdAgregar, IconosUI.Agregar);
+            IconosUI.AplicarIconoBoton(cmdSeleccionar, IconosUI.Aceptar);
+            IconosUI.AplicarIconoBoton(cmdContinuar, IconosUI.Continuar);
+            IconosUI.AplicarIconoBoton(cmdCambiarCliente, IconosUI.Cambiar);
+            IconosUI.AplicarIconoBoton(cmdCancelar, IconosUI.Cancelar);
         }
         private void frmNuevaVenta_Load(object sender, EventArgs e)
         {

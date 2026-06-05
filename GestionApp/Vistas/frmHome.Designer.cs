@@ -188,32 +188,33 @@
             // cargarNuevaVentaToolStripMenuItem
             // 
             cargarNuevaVentaToolStripMenuItem.Name = "cargarNuevaVentaToolStripMenuItem";
-            cargarNuevaVentaToolStripMenuItem.Size = new Size(149, 22);
+            cargarNuevaVentaToolStripMenuItem.Size = new Size(180, 22);
             cargarNuevaVentaToolStripMenuItem.Text = "Nueva venta...";
             cargarNuevaVentaToolStripMenuItem.Click += cargarNuevaVentaToolStripMenuItem_Click;
             // 
             // toolStripMenuItem2
             // 
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(146, 6);
+            toolStripMenuItem2.Size = new Size(177, 6);
             // 
             // verTodasToolStripMenuItem
             // 
             verTodasToolStripMenuItem.Name = "verTodasToolStripMenuItem";
-            verTodasToolStripMenuItem.Size = new Size(149, 22);
+            verTodasToolStripMenuItem.Size = new Size(180, 22);
             verTodasToolStripMenuItem.Text = "Ver todas...";
             verTodasToolStripMenuItem.Click += verTodasToolStripMenuItem_Click;
             // 
             // toolStripMenuItem8
             // 
             toolStripMenuItem8.Name = "toolStripMenuItem8";
-            toolStripMenuItem8.Size = new Size(146, 6);
+            toolStripMenuItem8.Size = new Size(177, 6);
             // 
             // balancesToolStripMenuItem
             // 
             balancesToolStripMenuItem.Name = "balancesToolStripMenuItem";
-            balancesToolStripMenuItem.Size = new Size(149, 22);
+            balancesToolStripMenuItem.Size = new Size(180, 22);
             balancesToolStripMenuItem.Text = "Balances...";
+            balancesToolStripMenuItem.Click += balancesToolStripMenuItem_Click;
             // 
             // configuraciónToolStripMenuItem
             // 
@@ -225,7 +226,7 @@
             // envíoDeEmailsToolStripMenuItem
             // 
             envíoDeEmailsToolStripMenuItem.Name = "envíoDeEmailsToolStripMenuItem";
-            envíoDeEmailsToolStripMenuItem.Size = new Size(165, 22);
+            envíoDeEmailsToolStripMenuItem.Size = new Size(180, 22);
             envíoDeEmailsToolStripMenuItem.Text = "Envío de emails...";
             envíoDeEmailsToolStripMenuItem.Click += envíoDeEmailsToolStripMenuItem_Click;
             // 

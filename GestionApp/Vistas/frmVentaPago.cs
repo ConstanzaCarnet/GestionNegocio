@@ -10,11 +10,14 @@ using System.Windows.Forms;
 
 namespace GestionApp
 {
-    public partial class frmVentaPago : Form
+    public partial class frmVentaPago : FormBase
     {
         public frmVentaPago()
         {
             InitializeComponent();
+            //iconos en los botones de acción
+            IconosUI.AplicarIconoBoton(cmdFinalizar, IconosUI.Aceptar);
+            IconosUI.AplicarIconoBoton(cmdCancelar, IconosUI.Cancelar);
         }
     }
 }

@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace GestionApp
 {
-    public partial class frmProductoPorCategoria : Form
+    public partial class frmProductoPorCategoria : FormBase
     {
         public frmProductoPorCategoria()
         {

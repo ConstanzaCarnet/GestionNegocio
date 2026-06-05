@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace GestionApp.Vistas
 {
-    public partial class frmAyuda : Form
+    public partial class frmAyuda : FormBase
     {
         string tipo = "";
         public frmAyuda(string tipo)

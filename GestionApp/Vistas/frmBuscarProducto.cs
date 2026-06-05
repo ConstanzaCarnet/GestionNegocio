@@ -12,11 +12,17 @@ using System.Windows.Forms;
 
 namespace GestionApp
 {
-    public partial class frmBuscarProducto : Form
+    public partial class frmBuscarProducto : FormBase
     {
         public frmBuscarProducto()
         {
             InitializeComponent();
+            //iconos en los botones de acción
+            IconosUI.AplicarIconoBoton(cmdBuscar, IconosUI.Buscar);
+            IconosUI.AplicarIconoBoton(cmdGuardar, IconosUI.Guardar);
+            IconosUI.AplicarIconoBoton(cmdModificar, IconosUI.Editar);
+            IconosUI.AplicarIconoBoton(cmdEliminar, IconosUI.Eliminar);
+            IconosUI.AplicarIconoBoton(cmdCancelar, IconosUI.Cancelar);
         }
         //inicializo servicio de producto
         private ProductoService _productoServicio = new ProductoService();

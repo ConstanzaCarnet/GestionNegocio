@@ -1,8 +1,8 @@
-using GestionApp.Vistas;
+Ôªøusing GestionApp.Vistas;
 
 namespace GestionApp
 {
-    public partial class frmHome : Form
+    public partial class frmHome : FormBase
     {
         public frmHome()
         {
@@ -26,7 +26,7 @@ namespace GestionApp
             ventana.ShowDialog();
         }
 
-        private void porCategorÌasToolStripMenuItem_Click(object sender, EventArgs e)
+        private void porCategor√≠asToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmProductoPorCategoria ventana = new frmProductoPorCategoria();
             ventana.ShowDialog();
@@ -61,9 +61,9 @@ namespace GestionApp
             frmVentas ventana = new frmVentas();
             ventana.Show();
         }
-        private void envÌoDeEmailsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void env√≠oDeEmailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmConfiguraciÛnEnvÌoEmails ventana = new frmConfiguraciÛnEnvÌoEmails();
+            frmConfiguraci√≥nEnv√≠oEmails ventana = new frmConfiguraci√≥nEnv√≠oEmails();
             ventana.Show();
         }
 
@@ -73,15 +73,21 @@ namespace GestionApp
             ventana.ShowDialog();
         }
 
-        private void cat·logosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void cat√°logosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmCatalogos ventana = new frmCatalogos();
             ventana.ShowDialog();
         }
 
-        private void categorÌasToolStripMenuItem_Click(object sender, EventArgs e)
+        private void categor√≠asToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmVerCategorÌas ventana = new frmVerCategorÌas();
+            frmVerCategor√≠as ventana = new frmVerCategor√≠as();
+            ventana.ShowDialog();
+        }
+
+        private void balancesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmBalances ventana = new frmBalances();
             ventana.ShowDialog();
         }
     }

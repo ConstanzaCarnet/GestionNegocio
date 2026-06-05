@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace GestionApp
 {
-    public partial class frmDetalleVenta : Form
+    public partial class frmDetalleVenta : FormBase
     {
         private VentaService _ventaService = new VentaService();
         private MensajeriaService _mensajeriaService = new MensajeriaService();
@@ -22,6 +22,8 @@ namespace GestionApp
         public frmDetalleVenta(VentaListDto venta)
         {
             InitializeComponent();
+            //icono en el botón de acción
+            IconosUI.AplicarIconoBoton(cmdEmail, IconosUI.Email);
             _venta = venta;
             //Cargamos los datos
             lblCliente.Text = venta.Cliente;

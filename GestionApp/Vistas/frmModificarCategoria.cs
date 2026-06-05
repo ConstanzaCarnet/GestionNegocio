@@ -13,13 +13,15 @@ using System.Windows.Forms;
 
 namespace GestionApp.Vistas
 {
-    public partial class frmModificarCategoria : Form
+    public partial class frmModificarCategoria : FormBase
     {
         private int _idCategoria;
         private CategoríaService _categoriaService = new CategoríaService();
         public frmModificarCategoria(int idCategoria)
         {
             InitializeComponent();
+            //icono en el botón de acción
+            IconosUI.AplicarIconoBoton(cmdGuardar, IconosUI.Guardar);
             _idCategoria = idCategoria;
         }
 

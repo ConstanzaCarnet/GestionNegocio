@@ -12,13 +12,18 @@ using System.Windows.Forms;
 
 namespace GestionApp
 {
-    public partial class frmVentas : Form
+    public partial class frmVentas : FormBase
     {
         public frmVentas()
         {
             InitializeComponent();
             //evito que se dupliquen columnas
             dgvGrilla.AutoGenerateColumns = false;
+            //iconos en las columnas de acción de la grilla
+            IconosUI.AplicarIcono(cmdVerDetalle, IconosUI.Ver, "Ver detalle");
+            IconosUI.AplicarIcono(cmdEliminar, IconosUI.Eliminar, "Eliminar venta");
+            //icono en el botón de acción
+            IconosUI.AplicarIconoBoton(cmdMostrar, IconosUI.Lista);
         }
         private void frmVentas_Load(object sender, EventArgs e)
         {

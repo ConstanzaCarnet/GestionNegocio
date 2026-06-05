@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace GestionApp
 {
-    public partial class frmDetalleProducto : Form
+    public partial class frmDetalleProducto : FormBase
     {
         public frmDetalleProducto()
         {
             InitializeComponent();
+            //iconos en los botones de acción
+            IconosUI.AplicarIconoBoton(cmdModificar, IconosUI.Editar);
+            IconosUI.AplicarIconoBoton(cmdEliminar, IconosUI.Eliminar);
+            IconosUI.AplicarIconoBoton(cmdGuardar, IconosUI.Guardar);
+            IconosUI.AplicarIconoBoton(cmdEmail, IconosUI.Email);
         }
     }
 }
