@@ -64,8 +64,15 @@ namespace GestionApp.Vistas
 
                 if (confirmacion == DialogResult.Yes)
                 {
-                    _categoriaService.Eliminar(id);
-                    RefrescarGrilla();
+                    try
+                    {
+                        _categoriaService.Eliminar(id);
+                        RefrescarGrilla();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "No se pudo eliminar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
             //o si fue el cmdModificar
@@ -101,13 +108,20 @@ namespace GestionApp.Vistas
                 Descripcion = string.IsNullOrWhiteSpace(txtDescripcion.Text) ? "Sin descripción" : txtDescripcion.Text
             };
             //llamo la funcion del servicio
-            _categoriaService.Crear(categoria);
-            MessageBox.Show("Categoría creada con éxito", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //limpio formulario
-            txtDescripcion.Text = "";
-            txtNombre.Text = "";
-            //refresco grilla
-            RefrescarGrilla();
+            try
+            {
+                _categoriaService.Crear(categoria);
+                MessageBox.Show("Categoría creada con éxito", "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //limpio formulario
+                txtDescripcion.Text = "";
+                txtNombre.Text = "";
+                //refresco grilla
+                RefrescarGrilla();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "No se pudo crear", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void txtNombre_TextChanged_1(object sender, EventArgs e)

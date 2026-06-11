@@ -55,16 +55,25 @@ public class Producto
         Stock += cantidad;
     }
     //modificar producto
-    public void CambiarDatos(string nombre, decimal precioVenta,int stock, int idCategoría)
+    public void CambiarDatos(string nombre, decimal precioVenta, int stock, int idCategoría, decimal? precioCompra = null, string? descripcion = null)
     {
-        if (nombre == null) throw new Exception("Nombre inválido");
+        if (string.IsNullOrWhiteSpace(nombre)) throw new Exception("Nombre inválido");
         if (precioVenta <= 0) throw new Exception("Precio de venta inválido");
+        if (stock < 0) throw new Exception("Stock inválido");
         //la categoría la ingresaremos de un combobox, por ende no la valido
         //cambio los valores
         Nombre = nombre;
         PrecioVenta = precioVenta;
         Stock = stock;
         IdCategoria = idCategoría;
+        //precio de compra y descripción son opcionales: sólo se actualizan si vienen
+        if (precioCompra.HasValue)
+        {
+            if (precioCompra.Value < 0) throw new Exception("Precio de compra inválido");
+            PrecioCompra = precioCompra.Value;
+        }
+        if (descripcion != null)
+            Descripcion = descripcion;
     }
 }
 

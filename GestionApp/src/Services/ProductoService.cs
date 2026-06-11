@@ -128,11 +128,9 @@ namespace GestionApp.src.Services
             var producto = db.Productos.FirstOrDefault(p => p.IdProducto == dto.IdProducto);
 
             if (producto == null)
-            {
-                MessageBox.Show("Error, el producto no se encontró", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            producto.CambiarDatos(dto.Nombre, dto.PrecioVenta, dto.Stock, dto.IdCategoria);
+                throw new Exception("El producto no se encontró");
+
+            producto.CambiarDatos(dto.Nombre, dto.PrecioVenta, dto.Stock, dto.IdCategoria, dto.PrecioCompra, dto.Descripcion);
             db.SaveChanges();
         }
 
@@ -142,10 +140,14 @@ namespace GestionApp.src.Services
             using var db = new AppDbContext();
             var producto = db.Productos.FirstOrDefault(p => p.IdProducto == id);
             if (producto == null)
-            {
-                MessageBox.Show("Error, el producto no se encontró", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                throw new Exception("El producto no se encontró");
+
+            //No permitimos borrar un producto que ya forma parte de ventas:
+            //rompería el historial (FK) y los balances. Avisamos al usuario.
+            bool tieneVentas = db.DetallesVenta.Any(d => d.IdProducto == id);
+            if (tieneVentas)
+                throw new Exception("No se puede eliminar el producto porque tiene ventas asociadas.");
+
             db.Remove(producto);
             db.SaveChanges();
         }

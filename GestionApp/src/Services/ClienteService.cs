@@ -20,10 +20,11 @@ namespace GestionApp.src.Services
             using var db = new AppDbContext();
 
             if (db.Clientes.Any(c => c.Email == dto.Email))
-            {
-                MessageBox.Show("El email ya está registrado", "Inconveniente", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                throw new Exception("El email ya está registrado");
+
+            if (!Cliente.TelefonoEsValido(dto.Telefono))
+                throw new Exception("El teléfono no es válido. Debe contener entre 8 y 15 dígitos.");
+
             var cliente = new Cliente(
                 dto.Nombre,
                 dto.Apellido,
@@ -49,6 +50,7 @@ namespace GestionApp.src.Services
             using var db = new AppDbContext();
 
             return db.Clientes
+               .Where(c => c.Estado == "Activo")//no mostramos clientes dados de baja (soft-delete)
                .Include(c => c.Cuenta)//con esto incluimos los datos de la cuenta(Cuenta)
                .AsNoTracking()
                .Select(c => new ClienteDto
@@ -68,6 +70,7 @@ namespace GestionApp.src.Services
         {
             using var db = new AppDbContext();
             return db.Clientes
+                .Where(c => c.Estado == "Activo")//solo clientes activos
                 .AsNoTracking()
                 .Select(c => c.Nombre + " " + (c.Apellido ?? ""))
                 .ToArray();
@@ -127,7 +130,7 @@ namespace GestionApp.src.Services
             using var db = new AppDbContext();
             return db.Clientes
                 .Include(c => c.Cuenta)
-                .Where(c => c.Nombre.Contains(texto))
+                .Where(c => c.Estado == "Activo" && c.Nombre.Contains(texto))
                 .AsNoTracking()
                 .Select(c => new ClienteDto
                 {
@@ -148,7 +151,7 @@ namespace GestionApp.src.Services
             using var db = new AppDbContext();
             return db.Clientes
                 .Include(c => c.Cuenta)
-                .Where(c => c.Cuenta != null && c.Cuenta.Saldo > 0)
+                .Where(c => c.Estado == "Activo" && c.Cuenta != null && c.Cuenta.Saldo > 0)
                 .AsNoTracking()
                 .Select(c => new ClienteDto
                 {
@@ -203,6 +206,9 @@ namespace GestionApp.src.Services
 
             if (cliente == null)
                 throw new Exception("Cliente no encontrado");
+
+            if (!Cliente.TelefonoEsValido(dto.Telefono))
+                throw new Exception("El teléfono no es válido. Debe contener entre 8 y 15 dígitos.");
 
             cliente.CambiarDatos(dto.Nombre, dto.Apellido, dto.Email, dto.Telefono, dto.Direccion);
 

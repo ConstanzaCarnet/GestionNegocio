@@ -24,7 +24,7 @@ namespace GestionApp
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             ClientSize = new Size(520, 460);
 
             // Dirección normalizada arriba.

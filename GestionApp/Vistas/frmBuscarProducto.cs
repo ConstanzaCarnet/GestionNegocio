@@ -164,7 +164,15 @@ namespace GestionApp
                 Stock = int.Parse(txtStock.Text),
                 IdCategoria = (int)cmbCategoria.SelectedValue
             };
-            _productoServicio.Actualizar(dto);
+            try
+            {
+                _productoServicio.Actualizar(dto);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "No se pudo actualizar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             MessageBox.Show("Producto actualizado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             //actualizo datos
             MostrarDatos(idProductoSeleccionado);
@@ -187,13 +195,20 @@ namespace GestionApp
 
             if (confirmResult == DialogResult.Yes)
             {
-                _productoServicio.Eliminar(idProductoSeleccionado);
-                MessageBox.Show("Producto eliminado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //limpio txts
-                limpiarControles();
-                //deshabilito botones
-                cmdModificar.Enabled = false;
-                cmdEliminar.Enabled = false;
+                try
+                {
+                    _productoServicio.Eliminar(idProductoSeleccionado);
+                    MessageBox.Show("Producto eliminado correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //limpio txts
+                    limpiarControles();
+                    //deshabilito botones
+                    cmdModificar.Enabled = false;
+                    cmdEliminar.Enabled = false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "No se pudo eliminar", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 

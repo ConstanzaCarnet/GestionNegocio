@@ -42,10 +42,12 @@ public class VentaService
 
             if (producto == null)
                 throw new Exception($"Producto {item.IdProducto} no encontrado");
-            //valido y descuento el stock <------Importante para actualizar stock!!
-            producto.DescontarStock(item.Cantidad);
-            //agrego
+            //agrego al detalle (valida el stock disponible contra el stock real)
             venta.AgregarProducto(producto, item.Cantidad);
+            //recién entonces descuento el stock <------Importante para actualizar stock!!
+            //(el orden importa: si descontáramos antes, AgregarProducto revalidaría
+            // contra un stock ya reducido y rechazaría ventas válidas)
+            producto.DescontarStock(item.Cantidad);
         }
 
         db.Ventas.Add(venta);

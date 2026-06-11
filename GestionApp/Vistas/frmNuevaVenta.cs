@@ -86,11 +86,16 @@ namespace GestionApp
         {
             //selecciono elproducto seleccionado
             var producto = (ProductoDto)cmbProductos.SelectedItem;
-            int cantidad = Convert.ToInt32(cmbCantidad.Text);
-            //verifico cantidad(en caso de que no haya stock)
-            if (cantidad <= 0)
+            //si el producto no tiene stock, el combo muestra "Sin stock" (texto no numérico)
+            if (producto == null || producto.Stock <= 0)
             {
-                MessageBox.Show("Cantidad inválida");
+                MessageBox.Show("El producto seleccionado no tiene stock disponible.", "Sin stock", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            //verifico cantidad (parseo seguro: el combo puede no contener un número)
+            if (!int.TryParse(cmbCantidad.Text, out int cantidad) || cantidad <= 0)
+            {
+                MessageBox.Show("Cantidad inválida", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             //si ya está ingresado en la lista de items
@@ -100,7 +105,7 @@ namespace GestionApp
             {
                 if ((existente.Cantidad + cantidad) > producto.Stock)
                 {
-                    MessageBox.Show("No tienes esa cantidad del producto disponible!", "Que lástima!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("No hay stock suficiente de este producto.", "Stock insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
                 //si no lo supera, sumo
@@ -121,7 +126,7 @@ namespace GestionApp
         //Guardamos la venta
         private void cmdContinuar_Click(object sender, EventArgs e)
         {
-            if (idCliente == null || idCliente == 0)
+            if (idCliente == 0)
             {
                 MessageBox.Show("Seleccione un cliente");
                 return;
@@ -153,7 +158,7 @@ namespace GestionApp
             dgvGrilla.DataSource = null;
             //habilito para elegir otro cliente
             cambiarCliente();
-            lblTotal.Text = "";
+            lblTotal.Text = "$0.00";
         }
 
         //funciones de la grilla
@@ -165,7 +170,7 @@ namespace GestionApp
         private void ActualizarTotal()
         {
             var total = _items.Sum(x => x.Subtotal);
-            lblTotal.Text = total.ToString("0.00");
+            lblTotal.Text = total.ToString("'$' #,##0.00");
         }
 
 

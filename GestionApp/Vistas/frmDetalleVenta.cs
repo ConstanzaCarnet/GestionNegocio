@@ -28,7 +28,7 @@ namespace GestionApp
             //Cargamos los datos
             lblCliente.Text = venta.Cliente;
             lblFecha.Text = venta.Fecha.ToString("dd/MM/yyyy");
-            lblTotal.Text = venta.Total.ToString("0.00");
+            lblTotal.Text = venta.Total.ToString("'$' #,##0.00");
 
         }
         private void frmDetalleVenta_Load(object sender, EventArgs e)
@@ -37,7 +37,7 @@ namespace GestionApp
             dgvGrilla.DataSource = _ventaService.ObtenerDetalleDeVenta(_venta.IdVenta);
         }
 
-        private void cmdEmail_Click(object sender, EventArgs e)
+        private async void cmdEmail_Click(object sender, EventArgs e)
         {
             // Validar que tenga telefono o email
             bool tieneEmail = !string.IsNullOrWhiteSpace(_venta.Email);
@@ -59,7 +59,7 @@ namespace GestionApp
                                            "Seleccionar medio", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes) EnviarPorWpp(mensaje, detalles);
-                else if (result == DialogResult.No) EnviarPorMail(mensaje);
+                else if (result == DialogResult.No) await EnviarPorMail(mensaje);
             }
             else if (tieneTelefono)
             {
@@ -67,7 +67,7 @@ namespace GestionApp
             }
             else
             {
-                EnviarPorMail(mensaje);
+                await EnviarPorMail(mensaje);
             }
         }
         //Funciones de mensajeria
@@ -76,7 +76,26 @@ namespace GestionApp
             string ticket = _ventaService.GenerarTicketTexto(_venta, detalles);
             _mensajeriaService.EnviarWhatsApp(_venta.Telefono, msg);
         }
-        private void EnviarPorMail(string msg) => _mensajeriaService.EnviarEmailHtml(_venta.Email, "Detalle de Compra - GestionApp", msg);
+        private async Task EnviarPorMail(string msg)
+        {
+            // Deshabilitamos el botón y avisamos mientras se envía (la conexión SMTP puede demorar).
+            cmdEmail.Enabled = false;
+            Cursor = Cursors.WaitCursor;
+            try
+            {
+                await _mensajeriaService.EnviarEmailHtml(_venta.Email, "Detalle de Compra - GestionApp", msg);
+                MessageBox.Show("El email se envió correctamente.", "Email enviado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"No se pudo enviar el email: {ex.Message}", "Error al enviar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+                cmdEmail.Enabled = true;
+            }
+        }
 
 
 

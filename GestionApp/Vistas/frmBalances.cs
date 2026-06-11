@@ -39,9 +39,8 @@ namespace GestionApp.Vistas
         //lista para los datos
         private List<MovimientoBalanceDto> datosActualesGrilla;
         private ResumenBalanceDto resumenActual;
-        //fecha de hoy
-        DateTime fechaMaxima = DateTime.Now;
-        DateTime fechaMinima = DateTime.Now.AddMonths(-1);
+
+
         public frmBalances()
         {
             InitializeComponent();
@@ -263,13 +262,13 @@ namespace GestionApp.Vistas
                         switch (extension)
                         {
                             case ".csv":
-                                ExportarCSV(sfd.FileName);
+                                _balanceService.ExportarCSV(sfd.FileName, datosActualesGrilla);
                                 break;
                             case ".txt":
-                                ExportarTXT(sfd.FileName);
+                                _balanceService.ExportarTXT(sfd.FileName, dtpDesde.Value, dtpHasta.Value, datosActualesGrilla);
                                 break;
                             case ".pdf":
-                                ExportarPDF(sfd.FileName);
+                                _balanceService.ExportarPDF(sfd.FileName, dtpDesde.Value, dtpHasta.Value, datosActualesGrilla,resumenActual,rdbProductos,rdbTendencia);
                                 break;
                         }
                         MessageBox.Show("¡Archivo exportado con éxito!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -282,206 +281,6 @@ namespace GestionApp.Vistas
             }
         }
 
-        private void ExportarCSV(string rutaArchivo)
-        {
-            using (var sw = new StreamWriter(rutaArchivo, false, Encoding.UTF8))
-            {
-                // Escribimos la cabecera
-                sw.WriteLine("Fecha;Total Ventas;Total Pagos");
-
-                // Escribimos los datos de la lista
-                foreach (var item in datosActualesGrilla)
-                {
-                    string fila = $"{item.Fecha};{item.TotalVentas:F2};{item.TotalPagos:F2}";
-                    sw.WriteLine(fila);
-                }
-            }
-        }
-        private void ExportarTXT(string rutaArchivo)
-        {
-            using (var sw = new StreamWriter(rutaArchivo, false, Encoding.UTF8))
-            {
-                sw.WriteLine("==================================================");
-                sw.WriteLine("               REPORTE DE BALANCES                ");
-                sw.WriteLine("==================================================");
-                sw.WriteLine($"Período: {dtpDesde.Value:dd/MM/yyyy} hasta {dtpHasta.Value:dd/MM/yyyy}");
-                sw.WriteLine("--------------------------------------------------");
-                // Alineación de columnas usando formato de strings (estructura de tabla fija)
-                sw.WriteLine("{0,-15} {1,15} {2,15}", "Fecha", "Total Ventas", "Total Pagos");
-                sw.WriteLine("--------------------------------------------------");
-
-                decimal totalPeriodoVentas = 0;
-                decimal totalPeriodoPagos = 0;
-
-                foreach (var item in datosActualesGrilla)
-                {
-                    sw.WriteLine("{0,-15} {1,15:'$' #,##0.00} {2,15:'$' #,##0.00}", item.Fecha, item.TotalVentas, item.TotalPagos);
-                    totalPeriodoVentas += item.TotalVentas;
-                    totalPeriodoPagos += item.TotalPagos;
-                }
-
-                sw.WriteLine("--------------------------------------------------");
-                sw.WriteLine("{0,-15} {1,15:'$' #,##0.00} {2,15:'$' #,##0.00}", "TOTALES:", totalPeriodoVentas, totalPeriodoPagos);
-                sw.WriteLine("==================================================");
-            }
-        }
-
-        private void ExportarPDF(string rutaArchivo)
-        {
-            QuestPDF.Settings.License = LicenseType.Community;
-
-            try
-            {
-                Document.Create(container =>
-                {
-                    container.Page(page =>
-                    {
-                        page.Size(PageSizes.A4);
-                        page.Margin(2, Unit.Centimetre);
-                        page.PageColor(Colors.White);
-                        page.DefaultTextStyle(x => x.FontSize(10).FontFamily("Arial"));
-
-                        // --- ENCABEZADO ---
-                        page.Header().Row(row =>
-                        {
-                            row.RelativeItem().Column(col =>
-                            {
-                                col.Item().Text("GestionApp").SemiBold().FontSize(18).FontColor(Colors.Blue.Darken3);
-                                col.Item().Text("Reporte Avanzado de Balances e Insights").FontSize(12).FontColor(Colors.Grey.Darken2);
-                            });
-
-                            row.ConstantItem(150).Column(col =>
-                            {
-                                col.Item().Text($"Desde: {dtpDesde.Value:dd/MM/yyyy}").AlignRight();
-                                col.Item().Text($"Hasta: {dtpHasta.Value:dd/MM/yyyy}").AlignRight();
-                            });
-                        });
-
-                        // --- CONTENIDO PRINCIPAL ---
-                        page.Content().PaddingVertical(1, Unit.Centimetre).Column(column =>
-                        {
-                            // 1. Grilla principal de movimientos diarios
-                            column.Item().Text("Movimientos del Período").Bold().FontSize(14).Underline();
-                            column.Item().PaddingBottom(10);
-
-                            column.Item().Table(table =>
-                            {
-                                table.ColumnsDefinition(columns =>
-                                {
-                                    columns.RelativeColumn(2);
-                                    columns.RelativeColumn(3);
-                                    columns.RelativeColumn(3);
-                                });
-
-                                table.Header(header =>
-                                {
-                                    header.Cell().Background(Colors.Blue.Darken3).Padding(6).Text("Fecha").Bold().FontColor(Colors.White);
-                                    header.Cell().Background(Colors.Blue.Darken3).Padding(6).Text("Total Ventas").Bold().FontColor(Colors.White).AlignRight();
-                                    header.Cell().Background(Colors.Blue.Darken3).Padding(6).Text("Total Pagos").Bold().FontColor(Colors.White).AlignRight();
-                                });
-
-                                decimal acumuladorVentas = 0;
-                                decimal acumuladorPagos = 0;
-
-                                foreach (var item in datosActualesGrilla)
-                                {
-                                    table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten2).Padding(5).Text(item.Fecha);
-                                    table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten2).Padding(5).Text(item.TotalVentas.ToString("'$' #,##0.00")).AlignRight();
-                                    table.Cell().BorderBottom(1).BorderColor(Colors.Grey.Lighten2).Padding(5).Text(item.TotalPagos.ToString("'$' #,##0.00")).AlignRight();
-
-                                    acumuladorVentas += item.TotalVentas;
-                                    acumuladorPagos += item.TotalPagos;
-                                }
-
-                                table.Cell().Background(Colors.Grey.Lighten4).Padding(6).Text("TOTALES").Bold();
-                                table.Cell().Background(Colors.Grey.Lighten4).Padding(6).Text(acumuladorVentas.ToString("C")).Bold().AlignRight();
-                                table.Cell().Background(Colors.Grey.Lighten4).Padding(6).Text(acumuladorPagos.ToString("C")).Bold().AlignRight();
-                            });
-
-                            // APARTADO CONDICIONAL: MIX DE PRODUCTOS (%)
-                            if (rdbProductos.Checked && resumenActual?.VentasPorCategoria.Count > 0)
-                            {
-                                column.Item().PaddingTop(20);
-                                column.Item().Text("Proporción de Ventas por Categoría").Bold().FontSize(14).Underline();
-                                column.Item().PaddingBottom(5);
-
-                                column.Item().Table(tableProd =>
-                                {
-                                    tableProd.ColumnsDefinition(cols =>
-                                    {
-                                        cols.RelativeColumn(4);
-                                        cols.RelativeColumn(2);
-                                        cols.RelativeColumn(2);
-                                    });
-
-                                    tableProd.Header(h =>
-                                    {
-                                        h.Cell().Background(Colors.Grey.Darken2).Padding(5).Text("Categoría").Bold().FontColor(Colors.White);
-                                        h.Cell().Background(Colors.Grey.Darken2).Padding(5).Text("Monto Total").Bold().FontColor(Colors.White).AlignRight();
-                                        h.Cell().Background(Colors.Grey.Darken2).Padding(5).Text("Participación").Bold().FontColor(Colors.White).AlignRight();
-                                    });
-
-                                    decimal totalVentasCat = resumenActual.VentasPorCategoria.Sum(x => x.Value);
-
-                                    foreach (var cat in resumenActual.VentasPorCategoria)
-                                    {
-                                        decimal porcentaje = totalVentasCat > 0 ? (cat.Value / totalVentasCat) * 100 : 0;
-
-                                        tableProd.Cell().BorderBottom(1).Padding(4).Text(cat.Key);
-                                        tableProd.Cell().BorderBottom(1).Padding(4).Text(cat.Value.ToString("C")).AlignRight();
-                                        tableProd.Cell().BorderBottom(1).Padding(4).Text($"{porcentaje:F1}%").AlignRight();
-                                    }
-                                });
-                            }
-
-                            // APARTADO CONDICIONAL: INSIGHTS DE TENDENCIA (ÚLTIMOS 6 MESES)
-                            if (rdbTendencia.Checked && resumenActual?.TendenciaSeisMeses.Count > 0)
-                            {
-                                column.Item().PaddingTop(20);
-                                column.Item().Text("Análisis Histórico de Tendencia (Últimos 6 Meses)").Bold().FontSize(14).Underline();
-                                column.Item().PaddingBottom(5);
-
-                                column.Item().Table(tableTend =>
-                                {
-                                    tableTend.ColumnsDefinition(cols =>
-                                    {
-                                        cols.RelativeColumn(4);
-                                        cols.RelativeColumn(4);
-                                    });
-
-                                    tableTend.Header(h =>
-                                    {
-                                        h.Cell().Background(Colors.Grey.Darken2).Padding(5).Text("Mes").Bold().FontColor(Colors.White);
-                                        h.Cell().Background(Colors.Grey.Darken2).Padding(5).Text("Total Facturado").Bold().FontColor(Colors.White).AlignRight();
-                                    });
-
-                                    foreach (var mes in resumenActual.TendenciaSeisMeses)
-                                    {
-                                        tableTend.Cell().BorderBottom(1).Padding(4).Text(mes.Key);
-                                        tableTend.Cell().BorderBottom(1).Padding(4).Text(mes.Value.ToString("'$' #,##0.00")).AlignRight();
-                                    }
-                                });
-                            }
-                        });
-
-                        // --- PIE DE PÁGINA ---
-                        page.Footer().Row(row =>
-                        {
-                            row.RelativeItem().Text($"Generado el: {DateTime.Now:dd/MM/yyyy HH:mm}").FontColor(Colors.Grey.Darken1).FontSize(9);
-                            row.RelativeItem().AlignRight().Text(x =>
-                            {
-                                x.Span("Página ");
-                                x.CurrentPageNumber();
-                            });
-                        });
-                    });
-                }).GeneratePdf(rutaArchivo);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error al compilar el PDF analítico: {ex.Message}");
-            }
-        }
 
         private void rdbProductos_CheckedChanged(object sender, EventArgs e)
         {
@@ -505,42 +304,36 @@ namespace GestionApp.Vistas
 
         private void cmdReiniciar_Click(object sender, EventArgs e)
         {
-            // 1. Desvincular límites temporales para evitar conflictos al resetear valores
-            dtpDesde.MinDate = DateTime.MinValue;
-            dtpDesde.MaxDate = DateTime.MaxValue;
-            dtpHasta.MinDate = DateTime.MinValue;
-            dtpHasta.MaxDate = DateTime.MaxValue;
-
-            // 2. Volver a setear los valores y límites correctos por defecto
+            // Volver a setear los valores y límites correctos por defecto
             DateTime hoy = DateTime.Now;
-            DateTime haceUnMes = hoy.AddMonths(-1);
+            DateTime haceSeisMeses = hoy.AddMonths(-6);
 
             dtpDesde.MaxDate = hoy;
-            dtpDesde.MinDate = haceUnMes;
-            dtpDesde.Value = haceUnMes;
+            dtpDesde.MinDate = haceSeisMeses;
+            dtpDesde.Value = haceSeisMeses;
 
             dtpHasta.MaxDate = hoy;
-            dtpHasta.MinDate = haceUnMes;
+            dtpHasta.MinDate = haceSeisMeses;
             dtpHasta.Value = hoy;
 
-            // 3. Limpiar las variables de datos en memoria
+            //Limpiar las variables de datos en memoria
             resumenActual = null;
             datosActualesGrilla = null;
 
-            // 4. Vaciar el DataGridView
+            //Vaciar el DataGridView
             dgvListar.DataSource = null;
 
-            // 5. Desmarcar todos los RadioButtons de los gráficos
+            //Desmarcar todos los RadioButtons de los gráficos
             rdbMetodos.Checked = false;
             rdbProductos.Checked = false;
             rdbTendencia.Checked = false;
 
-            // 6. Apagar la interacción de los RadioButtons hasta que vuelvan a filtrar
+            //Apagar la interacción de los RadioButtons hasta que vuelvan a filtrar
             rdbMetodos.Enabled = false;
             rdbProductos.Enabled = false;
             rdbTendencia.Enabled = false;
 
-            // 7. Limpiar y ocultar los controles de los gráficos de LiveCharts
+            //Limpiar y ocultar los controles de los gráficos de LiveCharts
             pieChartControl.Series = null;
             pieChartControl.Visible = false;
 
@@ -548,7 +341,7 @@ namespace GestionApp.Vistas
             barChartControl.XAxes = null;
             barChartControl.Visible = false;
 
-            // 8. Habilitar el dtpDesde por si quedó bloqueado por la tendencia
+            //Habilitar el dtpDesde por si quedó bloqueado por la tendencia
             dtpDesde.Enabled = true;
 
             MessageBox.Show("Filtros y gráficos reiniciados.", "Listo para otro informe", MessageBoxButtons.OK, MessageBoxIcon.Information);

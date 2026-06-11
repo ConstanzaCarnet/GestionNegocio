@@ -40,7 +40,8 @@ namespace GestionApp.src.Services
         }
 
         //vamos a enviar un mensaje tipo html, que se ve mejor
-        public async void EnviarEmailHtml(string emailDestino, string asunto, string cuerpoTicket)
+        //Devuelve Task (no void) para que la vista pueda await-earlo y capturar errores de envío.
+        public async Task EnviarEmailHtml(string emailDestino, string asunto, string cuerpoTicket)
         {
             var configService = new ConfiguracionService();
             var config = configService.ObtenerConfig();

@@ -32,10 +32,10 @@ namespace GestionApp.src.Services
                 throw new Exception("Cuenta no encontrada");
             //Creamos el pago
             var pago = new Pago(dto.IdCliente, dto.Monto, dto.MetodoPago);
-            //aplico el pago en la cuenta
-            cuenta.AplicarPago(dto.Monto);
-            //guardo
-            db.Pagos.Add(pago);
+            //registramos el pago en la cuenta a través del dominio:
+            //valida que no exceda la deuda, descuenta el saldo y lo agrega a la colección de pagos.
+            cuenta.RegistrarPago(pago);
+            //guardo (EF persiste el pago a través de la cuenta, que está siendo trackeada)
             db.SaveChanges();
         }
 
@@ -70,12 +70,13 @@ namespace GestionApp.src.Services
                     Fecha = p.Fecha
                 }).ToList();
         }
-        //buscar pagos por Fecha
-        public List<Pago> BuscarPorIdCliente(int? fecha)
+        //buscar pagos por mes (1-12)
+        public List<Pago> BuscarPorMes(int? mes)
         {
+            if (mes == null) return new List<Pago>();
             using var db = new AppDbContext();
             return db.Pagos
-                .Where(c => c.Fecha.Month == fecha.Value)
+                .Where(c => c.Fecha.Month == mes.Value)
                 .Select(p => new Pago
                 {
                     IdPago = p.IdPago,

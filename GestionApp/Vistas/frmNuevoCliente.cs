@@ -114,9 +114,19 @@ namespace GestionApp
             cliente.Telefono = txtTelefono.Text;
             cliente.Direccion = direccion;
             //llamo metodo del servicio
-            servicio.CrearCliente(cliente);
+            try
+            {
+                servicio.CrearCliente(cliente);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "No se pudo crear el cliente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             MessageBox.Show("Cliente creado con éxito!");
             Limpiar();
+            //actualizo grilla
+            dgvGrilla.DataSource = servicio.ObtenerTodos();
         }
 
         private void cmdTodos_Click(object sender, EventArgs e)

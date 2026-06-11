@@ -27,7 +27,6 @@ namespace GestionApp.src.Models
 
         public Cliente(string nombre, string apellido, string email, string telefono, string direccion)
         {
-            //BUSCAR LIBRERÍA PARA VALIDAR TELEFONO CORRECTAMENTE!!!!!
             Nombre = nombre;
             Apellido = apellido;
             Email = email;
@@ -45,12 +44,21 @@ namespace GestionApp.src.Models
             {
                 throw new ArgumentException("El email del cliente no puede ser nulo o vacío.");
             }
-            //BUSCAR LIBRERÍA PARA VALIDAR TELEFONO CORRECTAMENTE!!!!!
             Nombre = nombre;
             Apellido = apellido;
             Email = email;
             Telefono = telefono;
             Direccion = direccion;
+        }
+
+        // Validación básica de teléfono: nos quedamos con los dígitos y exigimos
+        // una longitud razonable (8 a 15, según el estándar E.164). Acepta espacios,
+        // guiones, paréntesis y el prefijo "+".
+        public static bool TelefonoEsValido(string? telefono)
+        {
+            if (string.IsNullOrWhiteSpace(telefono)) return false;
+            int cantidadDigitos = telefono.Count(char.IsDigit);
+            return cantidadDigitos >= 8 && cantidadDigitos <= 15;
         }
 
         public  void Desactivar()
